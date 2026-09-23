@@ -12,14 +12,27 @@ import { Link } from "react-router-dom";
 
 import "./Contact.css";
 
+import contactHero from "../assets/contact-hero.jpg";
+
 function Contact() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <main className="contact-page">
       {/* =========================================================
           HERO
-      ========================================================= */}
+      ========================================================== */}
+
       <section className="contact-hero">
-        <div className="contact-hero__background" />
+        <div
+          className="contact-hero__background"
+          style={{
+            backgroundImage: `url(${contactHero})`,
+          }}
+        />
+
         <div className="contact-hero__overlay" />
 
         <div className="container contact-hero__content">
@@ -55,7 +68,10 @@ function Contact() {
                 <span>WhatsApp Us</span>
               </a>
 
-              <a href="tel:+256782159173" className="btn btn--outline-light">
+              <a
+                href="tel:+256782159173"
+                className="btn btn--outline-light"
+              >
                 <Phone size={18} />
                 <span>Call 0782 159 173</span>
               </a>
@@ -71,7 +87,8 @@ function Contact() {
 
       {/* =========================================================
           CONTACT INTRO
-      ========================================================= */}
+      ========================================================== */}
+
       <section className="section contact-intro">
         <div className="container">
           <div className="contact-intro__grid">
@@ -119,7 +136,8 @@ function Contact() {
 
       {/* =========================================================
           CONTACT CARDS
-      ========================================================= */}
+      ========================================================== */}
+
       <section className="section contact-details">
         <div className="container">
           <div className="contact-details__header">
@@ -223,7 +241,9 @@ function Contact() {
                 <Clock3 size={22} />
               </div>
 
-              <span className="contact-card__label">GUEST SUPPORT</span>
+              <span className="contact-card__label">
+                GUEST SUPPORT
+              </span>
 
               <h3>Plan Ahead</h3>
 
@@ -243,11 +263,13 @@ function Contact() {
 
       {/* =========================================================
           ENQUIRY + MAP
-      ========================================================= */}
+      ========================================================== */}
+
       <section className="section contact-main">
         <div className="container">
           <div className="contact-main__grid">
             {/* FORM */}
+
             <motion.div
               className="contact-form-wrapper"
               initial={{ opacity: 0, x: -30 }}
@@ -267,10 +289,14 @@ function Contact() {
                 guests or anything else you would like us to know.
               </p>
 
-              <form className="contact-form">
+              <form
+                className="contact-form"
+                onSubmit={handleSubmit}
+              >
                 <div className="contact-form__row">
                   <div className="contact-form__field">
                     <label htmlFor="name">Your Name</label>
+
                     <input
                       id="name"
                       name="name"
@@ -281,6 +307,7 @@ function Contact() {
 
                   <div className="contact-form__field">
                     <label htmlFor="email">Email Address</label>
+
                     <input
                       id="email"
                       name="email"
@@ -292,7 +319,10 @@ function Contact() {
 
                 <div className="contact-form__row">
                   <div className="contact-form__field">
-                    <label htmlFor="phone">Phone / WhatsApp</label>
+                    <label htmlFor="phone">
+                      Phone / WhatsApp
+                    </label>
+
                     <input
                       id="phone"
                       name="phone"
@@ -302,29 +332,46 @@ function Contact() {
                   </div>
 
                   <div className="contact-form__field">
-                    <label htmlFor="subject">What Can We Help With?</label>
+                    <label htmlFor="subject">
+                      What Can We Help With?
+                    </label>
 
-                    <select id="subject" name="subject" defaultValue="">
+                    <select
+                      id="subject"
+                      name="subject"
+                      defaultValue=""
+                    >
                       <option value="" disabled>
                         Select an enquiry
                       </option>
+
                       <option value="accommodation">
                         Accommodation
                       </option>
+
                       <option value="restaurant">
                         Restaurant &amp; Bar
                       </option>
-                      <option value="camping">Camping</option>
+
+                      <option value="camping">
+                        Camping
+                      </option>
+
                       <option value="guided-tours">
                         Guided Experiences
                       </option>
+
                       <option value="kibale">
                         Kibale National Park
                       </option>
+
                       <option value="crater-lakes">
                         Crater Lakes
                       </option>
-                      <option value="other">Other</option>
+
+                      <option value="other">
+                        Other
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -340,7 +387,10 @@ function Contact() {
                   />
                 </div>
 
-                <button type="submit" className="btn btn--dark">
+                <button
+                  type="submit"
+                  className="btn btn--dark"
+                >
                   <Send size={17} />
                   <span>Send Enquiry</span>
                 </button>
@@ -348,6 +398,7 @@ function Contact() {
             </motion.div>
 
             {/* MAP */}
+
             <motion.div
               className="contact-map-wrapper"
               initial={{ opacity: 0, x: 30 }}
@@ -411,7 +462,8 @@ function Contact() {
 
       {/* =========================================================
           LOCATION STRIP
-      ========================================================= */}
+      ========================================================== */}
+
       <section className="contact-location-strip">
         <div className="container">
           <div className="contact-location-strip__inner">
@@ -448,7 +500,8 @@ function Contact() {
 
       {/* =========================================================
           FINAL CTA
-      ========================================================= */}
+      ========================================================== */}
+
       <section className="contact-cta">
         <div className="container">
           <motion.div
@@ -483,7 +536,10 @@ function Contact() {
                 <span>WhatsApp Our Team</span>
               </a>
 
-              <Link to="/accommodation" className="btn btn--outline-light">
+              <Link
+                to="/accommodation"
+                className="btn btn--outline-light"
+              >
                 <span>Explore Accommodation</span>
                 <ArrowRight size={18} />
               </Link>

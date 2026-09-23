@@ -1,0 +1,733 @@
+/* =========================================================
+   KIBALE TOURIST'S INN
+   EXPERIENCES PAGE
+========================================================= */
+
+.experiences-page {
+  --exp-green: #17372b;
+  --exp-deep: #0b2118;
+  --exp-gold: #c79b54;
+  --exp-gold-light: #e2c37e;
+  --exp-cream: #f6f2e9;
+  --exp-text: #27342e;
+  --exp-muted: #68736d;
+
+  background: #fff;
+  color: var(--exp-text);
+  overflow: hidden;
+}
+
+.experiences-page .container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.experiences-page .section {
+  padding: 115px 0;
+}
+
+.experiences-page .eyebrow {
+  display: inline-block;
+  color: var(--exp-green);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.experiences-page .eyebrow--light {
+  color: #fff;
+}
+
+.experiences-page .eyebrow--gold {
+  color: var(--exp-gold);
+}
+
+/* HERO */
+
+.experiences-hero {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--exp-deep);
+}
+
+.experiences-hero__image,
+.experiences-hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.experiences-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.experiences-hero__overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 25, 18, 0.92),
+      rgba(7, 25, 18, 0.6) 48%,
+      rgba(7, 25, 18, 0.2)
+    ),
+    linear-gradient(
+      0deg,
+      rgba(7, 25, 18, 0.75),
+      transparent 45%
+    );
+}
+
+.experiences-hero__content {
+  position: relative;
+  z-index: 2;
+  padding-top: 130px;
+  padding-bottom: 130px;
+}
+
+.experiences-hero__inner {
+  max-width: 760px;
+}
+
+.experiences-hero h1 {
+  margin: 18px 0 25px;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.6rem, 7vw, 7rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+.experiences-hero h1 span {
+  display: block;
+  color: var(--exp-gold-light);
+  font-style: italic;
+}
+
+.experiences-hero p {
+  max-width: 650px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+.experiences-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 35px;
+}
+
+.experiences-page .btn {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+}
+
+.experiences-page .btn-gold {
+  background: var(--exp-gold);
+  color: #fff;
+}
+
+.experiences-page .btn-gold:hover {
+  background: #d6ad67;
+  transform: translateY(-2px);
+}
+
+.experiences-page .btn-dark {
+  background: var(--exp-green);
+  color: #fff;
+}
+
+.experiences-page .btn-dark:hover {
+  background: var(--exp-deep);
+  transform: translateY(-2px);
+}
+
+.experiences-page .btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+}
+
+.experiences-page .btn-outline-light:hover {
+  background: #fff;
+  color: var(--exp-green);
+}
+
+.experiences-page .hero-text-link,
+.experiences-page .inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+}
+
+.experiences-page .hero-text-link {
+  color: #fff;
+}
+
+.experiences-page .hero-text-link:hover,
+.experiences-page .inline-link:hover {
+  color: var(--exp-gold);
+  gap: 13px;
+}
+
+.experiences-hero__bottom {
+  position: absolute;
+  z-index: 3;
+  bottom: 35px;
+  left: 50%;
+  width: min(1180px, calc(100% - 48px));
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.experiences-hero__bottom span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* INTRO */
+
+.experiences-intro {
+  background: #fff;
+}
+
+.experiences-intro__grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 100px;
+}
+
+.experiences-intro__heading h2,
+.experiences-feature__content h2 {
+  margin: 17px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.8rem, 5vw, 4.6rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.experiences-intro__heading h2 span,
+.experiences-feature__content h2 span {
+  display: block;
+  color: var(--exp-gold);
+  font-style: italic;
+}
+
+.experiences-intro__copy {
+  max-width: 670px;
+}
+
+.experiences-intro__copy p {
+  color: var(--exp-muted);
+  line-height: 1.85;
+}
+
+.experiences-intro__copy .lead {
+  margin-top: 0;
+  color: var(--exp-text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  line-height: 1.6;
+}
+
+.experiences-intro__note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 17px 20px;
+  background: var(--exp-cream);
+  color: var(--exp-green);
+  font-size: 0.82rem;
+}
+
+.experiences-intro__note svg {
+  flex: 0 0 auto;
+  color: var(--exp-gold);
+}
+
+/* HEADING */
+
+.section-heading-centered {
+  max-width: 720px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.section-heading-centered h2 {
+  margin: 15px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.section-heading-centered h2 span {
+  display: block;
+  color: var(--exp-gold);
+  font-style: italic;
+}
+
+.section-heading-centered p {
+  color: var(--exp-muted);
+  line-height: 1.8;
+}
+
+/* CARDS */
+
+.experiences-list {
+  background: var(--exp-cream);
+}
+
+.experiences-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.experience-card {
+  background: #fff;
+  overflow: hidden;
+}
+
+.experience-card__image {
+  position: relative;
+  display: block;
+  height: 380px;
+  overflow: hidden;
+}
+
+.experience-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.experience-card:hover .experience-card__image img {
+  transform: scale(1.05);
+}
+
+.experience-card__number {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 11px;
+  background: var(--exp-gold);
+  color: #fff;
+  font-size: 0.67rem;
+  font-weight: 700;
+}
+
+.experience-card__category {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 9px 12px;
+  background: rgba(10, 31, 23, 0.85);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.experience-card__content {
+  position: relative;
+  padding: 32px;
+}
+
+.experience-card__icon {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+  background: var(--exp-green);
+  color: var(--exp-gold-light);
+}
+
+.experience-card h3 {
+  margin: 0 0 12px;
+  color: var(--exp-green);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.experience-card p {
+  min-height: 78px;
+  margin: 0 0 25px;
+  color: var(--exp-muted);
+  line-height: 1.75;
+  font-size: 0.92rem;
+}
+
+.experience-card .inline-link {
+  color: var(--exp-green);
+}
+
+/* FEATURE */
+
+.experiences-feature {
+  background: #fff;
+}
+
+.experiences-feature__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 85px;
+  align-items: center;
+}
+
+.experiences-feature__visual {
+  position: relative;
+}
+
+.experiences-feature__visual > img {
+  width: 100%;
+  height: 650px;
+  object-fit: cover;
+}
+
+.experiences-feature__stamp {
+  position: absolute;
+  right: -30px;
+  bottom: 35px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  background: var(--exp-green);
+  color: #fff;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+}
+
+.experiences-feature__stamp svg {
+  color: var(--exp-gold-light);
+}
+
+.experiences-feature__stamp span {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experiences-feature__stamp strong {
+  margin-top: 3px;
+  color: var(--exp-gold-light);
+  font-size: 0.82rem;
+}
+
+.experiences-feature__content .lead {
+  color: var(--exp-text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  line-height: 1.65;
+}
+
+.experiences-feature__content > p {
+  color: var(--exp-muted);
+  line-height: 1.8;
+}
+
+.experience-feature-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px 20px;
+  padding: 0;
+  margin: 30px 0;
+  list-style: none;
+}
+
+.experience-feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--exp-text);
+  font-size: 0.83rem;
+}
+
+.experience-feature-list li span {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  display: grid;
+  place-items: center;
+  background: var(--exp-cream);
+  color: var(--exp-gold);
+}
+
+/* ADVENTURE */
+
+.experiences-adventure {
+  position: relative;
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.experiences-adventure__image,
+.experiences-adventure__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.experiences-adventure__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.experiences-adventure__overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 27, 19, 0.9),
+      rgba(7, 27, 19, 0.55),
+      rgba(7, 27, 19, 0.2)
+    );
+}
+
+.experiences-adventure__content {
+  position: relative;
+  z-index: 2;
+}
+
+.experiences-adventure__content > div {
+  max-width: 650px;
+}
+
+.experiences-adventure h2 {
+  margin: 17px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 6vw, 5.8rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.experiences-adventure h2 span {
+  display: block;
+  color: var(--exp-gold-light);
+  font-style: italic;
+}
+
+.experiences-adventure p {
+  max-width: 580px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.8;
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+/* RELATED */
+
+.experiences-related {
+  background: var(--exp-cream);
+}
+
+.experiences-related__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.experiences-related h2 {
+  margin: 15px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.experiences-related h2 span {
+  display: block;
+  color: var(--exp-gold);
+  font-style: italic;
+}
+
+.experiences-related .inline-link {
+  color: var(--exp-green);
+}
+
+.experiences-related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #dcd6ca;
+}
+
+.experiences-related__grid a {
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 30px;
+  background: #fff;
+  color: var(--exp-green);
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.experiences-related__grid a span {
+  flex: 1;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+}
+
+.experiences-related__grid a svg:first-child {
+  color: var(--exp-gold);
+}
+
+.experiences-related__grid a:hover {
+  background: var(--exp-green);
+  color: #fff;
+}
+
+/* CTA */
+
+.experiences-cta {
+  padding: 115px 0;
+  background: var(--exp-deep);
+  color: #fff;
+  text-align: center;
+}
+
+.experiences-cta__inner {
+  max-width: 750px;
+  margin: auto;
+}
+
+.experiences-cta__inner > svg {
+  margin-bottom: 25px;
+  color: var(--exp-gold-light);
+}
+
+.experiences-cta h2 {
+  margin: 17px 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.experiences-cta h2 span {
+  display: block;
+  color: var(--exp-gold-light);
+  font-style: italic;
+}
+
+.experiences-cta p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.8;
+}
+
+.experiences-cta__actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 35px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+  .experiences-intro__grid,
+  .experiences-feature__grid {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+
+  .experiences-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experiences-feature__stamp {
+    right: 20px;
+  }
+
+  .experiences-related__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .experiences-page .container {
+    width: min(100% - 30px, 1180px);
+  }
+
+  .experiences-page .section {
+    padding: 75px 0;
+  }
+
+  .experiences-hero {
+    min-height: 780px;
+  }
+
+  .experiences-hero__actions,
+  .experiences-cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .experiences-hero__bottom {
+    width: calc(100% - 30px);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .experience-card__image {
+    height: 300px;
+  }
+
+  .experiences-feature__visual > img {
+    height: 480px;
+  }
+
+  .experience-feature-list {
+    grid-template-columns: 1fr;
+  }
+
+  .experiences-related__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

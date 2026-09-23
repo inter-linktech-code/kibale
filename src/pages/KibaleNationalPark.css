@@ -1,0 +1,1099 @@
+/* =========================================================
+   KIBALE NATIONAL PARK PAGE
+   PREMIUM NATURE / LUXURY ECO-TOURISM DESIGN
+========================================================= */
+
+.kibale-page {
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  color: #1d211c;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.kibale-hero {
+  position: relative;
+  min-height: 780px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: #182018;
+}
+
+.kibale-hero__image {
+  position: absolute;
+  inset: 0;
+  background-image: var(--kibale-hero-image);
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.01);
+}
+
+.kibale-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(12, 20, 14, 0.88) 0%,
+      rgba(12, 20, 14, 0.67) 42%,
+      rgba(12, 20, 14, 0.25) 72%,
+      rgba(12, 20, 14, 0.4) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(10, 15, 11, 0.2) 0%,
+      rgba(10, 15, 11, 0.08) 55%,
+      rgba(10, 15, 11, 0.75) 100%
+    );
+}
+
+.kibale-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 780px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 120px;
+  padding-bottom: 55px;
+}
+
+.kibale-hero__copy {
+  max-width: 760px;
+}
+
+.kibale-hero h1 {
+  margin: 20px 0 25px;
+  max-width: 850px;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(52px, 6vw, 88px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.kibale-hero h1 span {
+  display: block;
+  color: #e2c27a;
+  font-style: italic;
+}
+
+.kibale-hero__copy > p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.kibale-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+  margin-top: 35px;
+}
+
+.kibale-hero__bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 45px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.kibale-hero__location {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.kibale-hero__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d7b76b;
+  box-shadow: 0 0 0 5px rgba(215, 183, 107, 0.15);
+}
+
+.kibale-hero__divider {
+  width: 70px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.kibale-hero__bottom p {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.kibale-intro {
+  background: #ffffff;
+}
+
+.kibale-intro__grid {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 80px;
+  align-items: start;
+}
+
+.kibale-intro__label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+.kibale-intro__vertical-line {
+  width: 1px;
+  height: 90px;
+  margin: 22px 0;
+  background: #cdbb91;
+}
+
+.kibale-intro__small {
+  color: #6c736b;
+  font-size: 12px;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kibale-intro__content {
+  max-width: 900px;
+}
+
+.kibale-intro__content .eyebrow {
+  margin-bottom: 15px;
+}
+
+.kibale-intro__content > p {
+  max-width: 780px;
+}
+
+.kibale-intro__content .text-link {
+  margin-top: 18px;
+}
+
+/* =========================================================
+   CHIMPANZEE
+========================================================= */
+
+.kibale-chimp {
+  background: #f4f1e9;
+}
+
+.kibale-chimp__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 90px;
+  align-items: center;
+}
+
+.kibale-chimp__visual {
+  position: relative;
+  padding: 0 30px 30px 0;
+}
+
+.kibale-chimp__image-card {
+  position: relative;
+  height: 610px;
+  overflow: hidden;
+  background: #d9d4c7;
+}
+
+.kibale-chimp__image-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.kibale-chimp__caption {
+  position: absolute;
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+  padding: 19px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(20, 27, 21, 0.8);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+}
+
+.kibale-chimp__caption span {
+  color: #d7b76b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.kibale-chimp__caption strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.kibale-chimp__badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 150px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #26352a;
+  color: #d7b76b;
+  text-align: center;
+}
+
+.kibale-chimp__badge span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #ffffff;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.kibale-chimp__badge strong {
+  color: #d7b76b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.kibale-chimp__content {
+  max-width: 620px;
+}
+
+.kibale-chimp__content .feature-list {
+  margin: 28px 0 32px;
+}
+
+/* =========================================================
+   FOREST
+========================================================= */
+
+.kibale-forest {
+  background: #ffffff;
+}
+
+.kibale-forest__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 90px;
+  align-items: center;
+}
+
+.kibale-forest__content {
+  max-width: 600px;
+}
+
+.kibale-forest__visual {
+  position: relative;
+  height: 620px;
+  overflow: hidden;
+}
+
+.kibale-forest__visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.kibale-forest__stamp {
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(18, 29, 21, 0.88);
+  color: #d7b76b;
+  backdrop-filter: blur(8px);
+}
+
+.kibale-forest__stamp span {
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.kibale-forest__stamp strong {
+  color: #d7b76b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* =========================================================
+   FOREST WALK
+========================================================= */
+
+.kibale-walk {
+  background: #e9e1cf;
+}
+
+.kibale-walk__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 90px;
+  align-items: center;
+}
+
+.kibale-walk__visual {
+  position: relative;
+  height: 590px;
+}
+
+.kibale-walk__visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.kibale-walk__number {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 125px;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #253327;
+  color: #ffffff;
+}
+
+.kibale-walk__number span {
+  margin-bottom: 4px;
+  color: #d7b76b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.kibale-walk__number strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  font-weight: 400;
+}
+
+.kibale-walk__content {
+  max-width: 610px;
+}
+
+.kibale-walk__quote {
+  margin-top: 32px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-left: 2px solid #c9a85d;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.kibale-walk__quote svg {
+  flex-shrink: 0;
+  color: #647153;
+}
+
+.kibale-walk__quote span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+}
+
+.kibale-walk__quote strong {
+  color: #526349;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* =========================================================
+   HIGHLIGHTS
+========================================================= */
+
+.kibale-highlights {
+  background: #202a21;
+  color: #ffffff;
+}
+
+.kibale-highlights__header {
+  max-width: 750px;
+  margin-bottom: 55px;
+}
+
+.kibale-highlights__header > p {
+  max-width: 650px;
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.kibale-highlights__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.kibale-highlight-card {
+  min-height: 330px;
+  padding: 30px 27px;
+  background: #202a21;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.kibale-highlight-card:hover {
+  background: #29362a;
+  transform: translateY(-5px);
+}
+
+.kibale-highlight-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.kibale-highlight-card__top > span {
+  color: #d7b76b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.kibale-highlight-card__icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(215, 183, 107, 0.35);
+  border-radius: 50%;
+  color: #d7b76b;
+}
+
+.kibale-highlight-card h3 {
+  margin: 0 0 13px;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.kibale-highlight-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.63);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.kibale-highlight-card > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  color: #d7b76b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   WILDLIFE
+========================================================= */
+
+.kibale-wildlife {
+  background: #ffffff;
+}
+
+.kibale-wildlife__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 90px;
+  align-items: center;
+}
+
+.kibale-wildlife__visual {
+  position: relative;
+  height: 620px;
+}
+
+.kibale-wildlife__visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.kibale-wildlife__badge {
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  background: rgba(23, 34, 25, 0.88);
+  color: #d7b76b;
+  backdrop-filter: blur(10px);
+}
+
+.kibale-wildlife__badge span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: #ffffff;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kibale-wildlife__badge strong {
+  color: #d7b76b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kibale-wildlife__content {
+  max-width: 620px;
+}
+
+.kibale-wildlife__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 35px;
+  border-top: 1px solid #ddd8cc;
+  border-bottom: 1px solid #ddd8cc;
+}
+
+.kibale-wildlife__stats div {
+  padding: 20px 15px 20px 0;
+}
+
+.kibale-wildlife__stats div + div {
+  padding-left: 15px;
+  border-left: 1px solid #ddd8cc;
+}
+
+.kibale-wildlife__stats strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #28382b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.kibale-wildlife__stats span {
+  color: #7b8179;
+  font-size: 11px;
+}
+
+/* =========================================================
+   CANOPY
+========================================================= */
+
+.kibale-canopy {
+  background: #f4f1e9;
+}
+
+.kibale-canopy__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 90px;
+  align-items: center;
+}
+
+.kibale-canopy__content {
+  max-width: 600px;
+}
+
+.kibale-canopy__visual {
+  position: relative;
+  height: 610px;
+  overflow: hidden;
+}
+
+.kibale-canopy__visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.kibale-canopy__overlay {
+  position: absolute;
+  left: 25px;
+  bottom: 25px;
+  padding: 18px 22px;
+  background: rgba(17, 28, 20, 0.87);
+  backdrop-filter: blur(10px);
+}
+
+.kibale-canopy__overlay span,
+.kibale-canopy__overlay strong {
+  display: block;
+}
+
+.kibale-canopy__overlay span {
+  margin-bottom: 3px;
+  color: #d7b76b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.kibale-canopy__overlay strong {
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+/* =========================================================
+   STAY CONNECTION
+========================================================= */
+
+.kibale-stay {
+  padding: 70px 0;
+  background: #263329;
+}
+
+.kibale-stay__inner {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 35px;
+}
+
+.kibale-stay__icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(215, 183, 107, 0.5);
+  border-radius: 50%;
+  color: #d7b76b;
+}
+
+.kibale-stay__content .eyebrow {
+  color: #d7b76b;
+}
+
+.kibale-stay__content h2 {
+  margin: 8px 0 8px;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 3vw, 43px);
+  font-weight: 400;
+}
+
+.kibale-stay__content h2 em {
+  color: #d7b76b;
+  font-style: italic;
+}
+
+.kibale-stay__content p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.63);
+  line-height: 1.7;
+}
+
+/* =========================================================
+   LOCATION / SEO
+========================================================= */
+
+.kibale-location {
+  background: #f4f1e9;
+}
+
+.kibale-location__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 100px;
+}
+
+.kibale-location__content {
+  max-width: 720px;
+}
+
+.kibale-location__content p {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.kibale-location__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 30px;
+}
+
+.kibale-location__tags span {
+  padding: 9px 13px;
+  border: 1px solid #d8d1c1;
+  color: #5d655c;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.kibale-cta {
+  position: relative;
+  min-height: 570px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.kibale-cta__background,
+.kibale-cta__background img,
+.kibale-cta__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.kibale-cta__background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kibale-cta__overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(11, 19, 13, 0.9),
+      rgba(11, 19, 13, 0.62),
+      rgba(11, 19, 13, 0.45)
+    );
+}
+
+.kibale-cta__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1050px;
+}
+
+.kibale-cta h2 {
+  max-width: 800px;
+  margin: 18px 0;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(44px, 5vw, 70px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.kibale-cta h2 em {
+  display: block;
+  color: #d7b76b;
+  font-style: italic;
+}
+
+.kibale-cta p {
+  max-width: 650px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.77);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.kibale-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.kibale-cta__phone {
+  min-height: 48px;
+  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.kibale-cta__phone span {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.kibale-cta__phone strong {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .kibale-chimp__grid,
+  .kibale-forest__grid,
+  .kibale-walk__grid,
+  .kibale-wildlife__grid,
+  .kibale-canopy__grid {
+    gap: 55px;
+  }
+
+  .kibale-highlights__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kibale-stay__inner {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+
+  .kibale-stay__inner .btn {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 850px) {
+  .kibale-hero {
+    min-height: 700px;
+  }
+
+  .kibale-hero__content {
+    min-height: 700px;
+    padding-top: 100px;
+  }
+
+  .kibale-hero__bottom {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-top: 70px;
+  }
+
+  .kibale-intro__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .kibale-intro__label {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .kibale-intro__vertical-line {
+    width: 50px;
+    height: 1px;
+    margin: 0;
+  }
+
+  .kibale-intro__small br {
+    display: none;
+  }
+
+  .kibale-chimp__grid,
+  .kibale-forest__grid,
+  .kibale-walk__grid,
+  .kibale-wildlife__grid,
+  .kibale-canopy__grid,
+  .kibale-location__grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .kibale-forest__grid,
+  .kibale-canopy__grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .kibale-forest__visual,
+  .kibale-canopy__visual {
+    width: 100%;
+    order: -1;
+  }
+
+  .kibale-chimp__image-card,
+  .kibale-walk__visual,
+  .kibale-wildlife__visual,
+  .kibale-forest__visual,
+  .kibale-canopy__visual {
+    height: 520px;
+  }
+
+  .kibale-stay__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .kibale-stay__inner .btn {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .kibale-hero {
+    min-height: 650px;
+  }
+
+  .kibale-hero__content {
+    min-height: 650px;
+    padding-top: 100px;
+    padding-bottom: 35px;
+  }
+
+  .kibale-hero h1 {
+    font-size: clamp(43px, 13vw, 62px);
+  }
+
+  .kibale-hero__copy > p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .kibale-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kibale-hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .kibale-hero__bottom {
+    display: none;
+  }
+
+  .kibale-chimp__visual {
+    padding: 0 15px 15px 0;
+  }
+
+  .kibale-chimp__image-card,
+  .kibale-walk__visual,
+  .kibale-wildlife__visual,
+  .kibale-forest__visual,
+  .kibale-canopy__visual {
+    height: 420px;
+  }
+
+  .kibale-chimp__badge {
+    width: 120px;
+    min-height: 120px;
+  }
+
+  .kibale-highlights__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kibale-highlight-card {
+    min-height: auto;
+  }
+
+  .kibale-highlight-card__top {
+    margin-bottom: 35px;
+  }
+
+  .kibale-wildlife__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .kibale-wildlife__stats div,
+  .kibale-wildlife__stats div + div {
+    padding: 15px 0;
+    border-left: 0;
+    border-bottom: 1px solid #ddd8cc;
+  }
+
+  .kibale-wildlife__stats div:last-child {
+    border-bottom: 0;
+  }
+
+  .kibale-cta {
+    min-height: 620px;
+  }
+
+  .kibale-cta h2 {
+    font-size: 46px;
+  }
+
+  .kibale-cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kibale-cta__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .kibale-cta__phone {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 15px 0 0;
+  }
+
+  .kibale-location__tags {
+    gap: 7px;
+  }
+}

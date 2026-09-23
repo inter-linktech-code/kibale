@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import {
   ArrowUpRight,
   Mail,
@@ -6,14 +7,15 @@ import {
   MessageCircle,
   Phone,
 } from "lucide-react";
+
 import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
   FaYoutube,
 } from "react-icons/fa";
-import "./Footer.css";
 
+import "./Footer.css";
 import logo from "../assets/logo.png";
 
 function Footer() {
@@ -28,11 +30,14 @@ function Footer() {
       <div className="site-footer__main">
         <div className="container">
           <div className="site-footer__grid">
-
             {/* BRAND */}
 
             <div className="site-footer__brand">
-              <Link to="/" className="site-footer__logo">
+              <Link
+                to="/"
+                className="site-footer__logo"
+                aria-label="Kibale Tourist's Inn home"
+              >
                 <span className="site-footer__logo-image">
                   <img
                     src={logo}
@@ -41,7 +46,9 @@ function Footer() {
                 </span>
 
                 <span className="site-footer__logo-text">
-                  <strong>Kibale Tourist&apos;s Inn</strong>
+                  <strong>
+                    Kibale Tourist&apos;s Inn
+                  </strong>
 
                   <small>
                     Comfort • Nature • Discovery
@@ -50,10 +57,11 @@ function Footer() {
               </Link>
 
               <p className="site-footer__description">
-                Discover refined comfort in the heart of Western Uganda.
-                Kibale Tourist&apos;s Inn offers welcoming accommodation,
-                restaurant and bar experiences, camping, and guided
-                adventures around Kibale National Park and the crater lakes.
+                Discover refined comfort in the heart of
+                Western Uganda. Kibale Tourist&apos;s Inn offers
+                welcoming accommodation, restaurant and bar
+                experiences, camping, and guided adventures
+                around Kibale National Park and the crater lakes.
               </p>
 
               {/* SOCIAL MEDIA */}
@@ -103,7 +111,9 @@ function Footer() {
               <h3>Discover Your Stay</h3>
 
               <nav className="site-footer__links">
-                <Link to="/">Home</Link>
+                <Link to="/">
+                  Home
+                </Link>
 
                 <Link to="/accommodation">
                   Accommodation
@@ -175,7 +185,6 @@ function Footer() {
               </h3>
 
               <div className="site-footer__contact-list">
-
                 {/* PHONE */}
 
                 <a href="tel:+256782159173">
@@ -184,7 +193,9 @@ function Footer() {
                   </span>
 
                   <span>
-                    <small>Call Us</small>
+                    <small>
+                      Call Us
+                    </small>
 
                     <strong>
                       0782 159 173
@@ -200,7 +211,9 @@ function Footer() {
                   </span>
 
                   <span>
-                    <small>Reservations</small>
+                    <small>
+                      Reservations
+                    </small>
 
                     <strong>
                       0786 197 552
@@ -220,7 +233,9 @@ function Footer() {
                   </span>
 
                   <span>
-                    <small>WhatsApp</small>
+                    <small>
+                      WhatsApp
+                    </small>
 
                     <strong>
                       0755 517 111
@@ -240,17 +255,17 @@ function Footer() {
                   </span>
 
                   <span>
-                    <small>Location</small>
+                    <small>
+                      Location
+                    </small>
 
                     <strong>
                       Kibale, Western Uganda
                     </strong>
                   </span>
                 </a>
-
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -262,7 +277,6 @@ function Footer() {
       <div className="site-footer__booking">
         <div className="container">
           <div className="site-footer__booking-inner">
-
             <div>
               <span className="site-footer__booking-eyebrow">
                 Your Kibale Escape
@@ -270,7 +284,9 @@ function Footer() {
 
               <h3>
                 Stay close to nature.
-                <em>Experience more.</em>
+                <em>
+                  Experience more.
+                </em>
               </h3>
             </div>
 
@@ -284,7 +300,6 @@ function Footer() {
 
               <ArrowUpRight size={18} />
             </Link>
-
           </div>
         </div>
       </div>
@@ -296,7 +311,6 @@ function Footer() {
       <div className="site-footer__bottom">
         <div className="container">
           <div className="site-footer__bottom-inner">
-
             <p>
               © {currentYear} Kibale Tourist&apos;s Inn.
               All rights reserved.
@@ -326,7 +340,6 @@ function Footer() {
                 Get in touch
               </span>
             </a>
-
           </div>
 
           {/* =====================================
@@ -346,7 +359,6 @@ function Footer() {
               Inter-Link Tech
             </a>
           </div>
-
         </div>
       </div>
     </footer>

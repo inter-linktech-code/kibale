@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import {
+  ArrowLeft,
   ArrowRight,
   CalendarCheck,
   Check,
@@ -22,6 +25,75 @@ import restaurantImage from "../assets/restaurant.jpg";
 import kibaleForestImage from "../assets/kibale-forest.jpg";
 import craterLakesImage from "../assets/crater-lakes.jpg";
 import ctaKibaleImage from "../assets/cta-kibale.jpg";
+import aboutStoryImage from "../assets/about-story.jpg";
+
+const heroSlides = [
+  {
+    id: 1,
+    image: heroImage,
+    eyebrow: "Kibale • Western Uganda",
+    title: "Your Refined Stay",
+    accent: "in the Heart of Kibale",
+    description:
+      "Welcome to Kibale Tourist's Inn — a warm and elegant base for discovering Kibale National Park, crater lakes and the extraordinary landscapes of Western Uganda.",
+    primaryLabel: "Plan Your Stay",
+    primaryLink: "/booking",
+    secondaryLabel: "Explore Kibale",
+    secondaryLink: "/experiences",
+  },
+  {
+    id: 2,
+    image: accommodationImage,
+    eyebrow: "Stay • Rest • Reconnect",
+    title: "Comfort After",
+    accent: "Every Adventure",
+    description:
+      "Settle into a peaceful and welcoming environment where comfortable accommodation gives you the space to rest, recharge and prepare for another day in Kibale.",
+    primaryLabel: "Discover Accommodation",
+    primaryLink: "/accommodation",
+    secondaryLabel: "Book Your Stay",
+    secondaryLink: "/booking",
+  },
+  {
+    id: 3,
+    image: kibaleForestImage,
+    eyebrow: "Nature • Wildlife • Discovery",
+    title: "Step Into",
+    accent: "The Forest",
+    description:
+      "Discover the remarkable natural world of Kibale — from ancient rainforest and wildlife to unforgettable moments beneath the forest canopy.",
+    primaryLabel: "Discover Kibale",
+    primaryLink: "/kibale-national-park",
+    secondaryLabel: "Explore Experiences",
+    secondaryLink: "/experiences",
+  },
+  {
+    id: 4,
+    image: craterLakesImage,
+    eyebrow: "Scenic Exploration",
+    title: "Beyond The Forest",
+    accent: "Crater Lakes Await",
+    description:
+      "Journey into the beautiful crater lake landscapes surrounding Kibale, where rolling hills, volcanic lakes and quiet countryside create a different side of Western Uganda.",
+    primaryLabel: "Explore Crater Lakes",
+    primaryLink: "/crater-lakes",
+    secondaryLabel: "Plan Your Journey",
+    secondaryLink: "/booking",
+  },
+  {
+    id: 5,
+    image: restaurantImage,
+    eyebrow: "Restaurant • Bar • Kibale",
+    title: "Taste The Journey",
+    accent: "Flavours of Kibale",
+    description:
+      "From breakfast before the day's exploration to relaxed evenings after an adventure, discover welcoming dining and refreshing drinks at Kibale Tourist's Inn.",
+    primaryLabel: "Explore Restaurant",
+    primaryLink: "/restaurant",
+    secondaryLabel: "Stay With Us",
+    secondaryLink: "/booking",
+  },
+];
 
 const accommodationFeatures = [
   "Comfortable private rooms",
@@ -34,22 +106,26 @@ const reasons = [
   {
     icon: MapPin,
     title: "A Strategic Kibale Location",
-    text: "Stay within easy reach of Kibale's natural attractions while enjoying a calm and comfortable place to return to after a day of exploration.",
+    text:
+      "Stay within easy reach of Kibale's natural attractions while enjoying a calm and comfortable place to return to after a day of exploration.",
   },
   {
     icon: Compass,
     title: "Experiences Beyond the Room",
-    text: "Discover guided experiences around Kibale National Park, crater lakes and the surrounding landscapes with experiences designed around your stay.",
+    text:
+      "Discover guided experiences around Kibale National Park, crater lakes and the surrounding landscapes with experiences designed around your stay.",
   },
   {
     icon: Utensils,
     title: "Restaurant & Bar",
-    text: "Enjoy relaxed dining, refreshing drinks and welcoming hospitality without having to leave the inn.",
+    text:
+      "Enjoy relaxed dining, refreshing drinks and welcoming hospitality without having to leave the inn.",
   },
   {
     icon: Trees,
     title: "Nature at Your Doorstep",
-    text: "Kibale is a destination for travellers who want to slow down, reconnect with nature and experience Western Uganda.",
+    text:
+      "Kibale is a destination for travellers who want to reconnect with nature and experience the landscapes, wildlife and character of Western Uganda.",
   },
 ];
 
@@ -58,71 +134,148 @@ const experiences = [
     icon: Trees,
     number: "01",
     title: "Kibale National Park",
-    text: "Explore one of Uganda's remarkable forest destinations and plan your stay around the natural experiences that make Kibale special.",
+    text:
+      "Explore one of Uganda's remarkable forest destinations and plan your stay around the natural experiences that make Kibale special.",
     link: "/kibale-national-park",
   },
   {
     icon: Mountain,
     number: "02",
     title: "Crater Lakes",
-    text: "Discover the dramatic volcanic crater lake landscapes surrounding Kibale with guided excursions and scenic exploration.",
+    text:
+      "Discover the dramatic volcanic crater lake landscapes surrounding Kibale with guided excursions and scenic exploration.",
     link: "/crater-lakes",
   },
   {
     icon: Compass,
     number: "03",
     title: "Guided Tours",
-    text: "Turn your visit into a richer journey with guided exploration of local attractions, nature and the landscapes around Kibale.",
+    text:
+      "Turn your visit into a richer journey with guided exploration of local attractions, nature and the landscapes around Kibale.",
     link: "/guided-tours",
   },
   {
     icon: TentTree,
     number: "04",
     title: "Camping",
-    text: "For travellers who prefer a closer connection with the outdoors, our camping experience brings nature even closer.",
+    text:
+      "For travellers who prefer a closer connection with the outdoors, our camping experience brings nature even closer.",
     link: "/camping",
   },
 ];
 
 function Home() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) {
+      return undefined;
+    }
+
+    const timer = setInterval(() => {
+      setActiveSlide(
+        (current) => (current + 1) % heroSlides.length
+      );
+    }, 7000);
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const goToSlide = (index) => {
+    setActiveSlide(index);
+  };
+
+  const goToPrevious = () => {
+    setActiveSlide(
+      (current) =>
+        (current - 1 + heroSlides.length) % heroSlides.length
+    );
+  };
+
+  const goToNext = () => {
+    setActiveSlide(
+      (current) => (current + 1) % heroSlides.length
+    );
+  };
+
+  const currentSlide = heroSlides[activeSlide];
+
   return (
     <main className="home-page">
-      {/* HERO */}
+      {/* HERO SLIDER */}
       <section
         className="home-hero"
-        style={{ "--hero-image": `url(${heroImage})` }}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onFocus={() => setIsPaused(true)}
+        onBlur={() => setIsPaused(false)}
       >
-        <div className="home-hero__image" />
-        <div className="home-hero__overlay" />
+        <div className="home-hero__slides">
+          {heroSlides.map((slide, index) => (
+            <div
+              className={`home-hero__slide ${
+                index === activeSlide ? "is-active" : ""
+              }`}
+              key={slide.id}
+              aria-hidden={index !== activeSlide}
+            >
+              <img
+                src={slide.image}
+                alt={`${slide.title} ${slide.accent} at Kibale Tourist's Inn`}
+                className="home-hero__image"
+              />
+
+              <div className="home-hero__overlay" />
+            </div>
+          ))}
+        </div>
 
         <div className="home-hero__content container">
           <div className="home-hero__copy">
+            <div className="home-hero__counter">
+              <span>0{activeSlide + 1}</span>
+
+              <div className="home-hero__counter-line">
+                <span
+                  key={activeSlide}
+                  className="home-hero__counter-progress"
+                />
+              </div>
+
+              <span>0{heroSlides.length}</span>
+            </div>
+
             <span className="eyebrow eyebrow--gold">
-              Kibale • Western Uganda
+              {currentSlide.eyebrow}
             </span>
 
-            <h1>
-              Your Refined Stay
-              <span>in the Heart of Kibale</span>
+            <h1 key={`title-${activeSlide}`}>
+              {currentSlide.title}
+              <span>{currentSlide.accent}</span>
             </h1>
 
-            <p className="home-hero__lead">
-              Welcome to Kibale Tourist&apos;s Inn — a warm and elegant base
-              for discovering Kibale National Park, crater lakes and the
-              extraordinary landscapes of Western Uganda.
+            <p
+              className="home-hero__lead"
+              key={`description-${activeSlide}`}
+            >
+              {currentSlide.description}
             </p>
 
             <div className="home-hero__actions">
-              <Link to="/booking" className="btn btn--gold">
-                Plan Your Stay
+              <Link
+                to={currentSlide.primaryLink}
+                className="btn btn--gold"
+              >
+                {currentSlide.primaryLabel}
                 <ArrowRight size={18} />
               </Link>
 
               <Link
-                to="/experiences"
+                to={currentSlide.secondaryLink}
                 className="btn btn--outline-light"
               >
-                Explore Kibale
+                {currentSlide.secondaryLabel}
               </Link>
             </div>
           </div>
@@ -142,6 +295,47 @@ function Home() {
             </div>
           </div>
         </div>
+
+        <div className="home-hero__navigation">
+          <button
+            type="button"
+            className="home-hero__arrow"
+            onClick={goToPrevious}
+            aria-label="Previous slide"
+          >
+            <ArrowLeft size={19} />
+          </button>
+
+          <div className="home-hero__dots">
+            {heroSlides.map((slide, index) => (
+              <button
+                type="button"
+                key={slide.id}
+                className={`home-hero__dot ${
+                  index === activeSlide ? "is-active" : ""
+                }`}
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to slide ${index + 1}`}
+                aria-current={
+                  index === activeSlide ? "true" : undefined
+                }
+              >
+                <span>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className="home-hero__arrow"
+            onClick={goToNext}
+            aria-label="Next slide"
+          >
+            <ArrowRight size={19} />
+          </button>
+        </div>
       </section>
 
       {/* INTRODUCTION */}
@@ -149,7 +343,9 @@ function Home() {
         <div className="container">
           <div className="home-intro__grid">
             <div className="home-intro__label">
-              <span className="eyebrow">Welcome to Kibale</span>
+              <span className="eyebrow">
+                Welcome to Kibale
+              </span>
 
               <div className="home-intro__vertical-line" />
 
@@ -161,30 +357,52 @@ function Home() {
             </div>
 
             <div className="home-intro__content">
-              <h2 className="section-heading">
-                Comfort meets the
-                <em> spirit of Western Uganda.</em>
-              </h2>
+              <div className="home-intro__story">
+                <div className="home-intro__story-image">
+                  <img
+                    src={aboutStoryImage}
+                    alt="Kibale Tourist's Inn hospitality in Western Uganda"
+                  />
 
-              <p className="lead-text">
-                Kibale Tourist&apos;s Inn offers a welcoming stay for travellers
-                looking to experience the beauty, wildlife and landscapes of
-                Kibale. From restful accommodation and relaxed dining to
-                camping and guided exploration, the inn brings together the
-                essentials for a memorable Western Uganda journey.
-              </p>
+                  <div className="home-intro__story-badge">
+                    <span>Our Story</span>
+                    <strong>Kibale</strong>
+                  </div>
+                </div>
 
-              <p>
-                Whether Kibale is your destination, your base for exploring
-                the surrounding crater lakes or part of a wider Uganda safari,
-                our aim is simple: make your time here comfortable, personal
-                and connected to the destination around you.
-              </p>
+                <div className="home-intro__story-copy">
+                  <span className="eyebrow">
+                    Discover Our Story
+                  </span>
 
-              <Link to="/about" className="text-link">
-                Discover Our Story
-                <ArrowRight size={17} />
-              </Link>
+                  <h2 className="section-heading">
+                    Comfort meets the
+                    <em> spirit of Western Uganda.</em>
+                  </h2>
+
+                  <p className="lead-text">
+                    Kibale Tourist&apos;s Inn offers a welcoming stay for
+                    travellers looking to experience the beauty, wildlife and
+                    landscapes of Kibale. From restful accommodation and
+                    relaxed dining to camping and guided exploration, the inn
+                    brings together the essentials for a memorable Western
+                    Uganda journey.
+                  </p>
+
+                  <p>
+                    Whether Kibale is your destination, your base for
+                    exploring the surrounding crater lakes or part of a wider
+                    Uganda safari, our aim is simple: make your time here
+                    comfortable, personal and connected to the destination
+                    around you.
+                  </p>
+
+                  <Link to="/about" className="text-link">
+                    Discover Our Story
+                    <ArrowRight size={17} />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -195,7 +413,9 @@ function Home() {
         <div className="container">
           <div className="section-topline">
             <div>
-              <span className="eyebrow">Stay With Us</span>
+              <span className="eyebrow">
+                Stay With Us
+              </span>
 
               <h2 className="section-heading">
                 A comfortable base for
@@ -203,7 +423,10 @@ function Home() {
               </h2>
             </div>
 
-            <Link to="/accommodation" className="text-link">
+            <Link
+              to="/accommodation"
+              className="text-link"
+            >
               View Accommodation
               <ArrowRight size={17} />
             </Link>
@@ -223,7 +446,9 @@ function Home() {
             </div>
 
             <div className="home-stay__content">
-              <span className="number-label">01 / ACCOMMODATION</span>
+              <span className="number-label">
+                01 / ACCOMMODATION
+              </span>
 
               <h3>
                 Rest well.
@@ -251,7 +476,10 @@ function Home() {
                 ))}
               </ul>
 
-              <Link to="/accommodation" className="btn btn--dark">
+              <Link
+                to="/accommodation"
+                className="btn btn--dark"
+              >
                 Discover Your Stay
                 <ArrowRight size={17} />
               </Link>
@@ -265,27 +493,34 @@ function Home() {
         <div className="container">
           <div className="home-dining__grid">
             <div className="home-dining__content">
-              <span className="eyebrow">Restaurant & Bar</span>
+              <span className="eyebrow">
+                Restaurant & Bar
+              </span>
 
               <h2 className="section-heading">
-                Good food.
+                Taste the journey.
                 <br />
-                <em>Slow moments.</em>
+                <em>Flavours of Kibale.</em>
               </h2>
 
               <p className="lead-text">
-                Make dining part of the experience. Our restaurant and bar
-                provide a relaxed setting to enjoy a meal, unwind with a drink
-                and share stories after a day exploring Kibale.
+                Make dining part of your Uganda journey. Enjoy freshly
+                prepared meals, refreshing drinks and a welcoming atmosphere
+                before or after exploring Kibale National Park and the
+                surrounding landscapes.
               </p>
 
               <p>
-                From travellers passing through to guests staying with us,
-                the restaurant and bar offer a comfortable place to pause,
-                connect and enjoy the atmosphere of Western Uganda.
+                From breakfast before a day of discovery to relaxed evenings
+                after a forest adventure, our restaurant and bar offer
+                travellers a comfortable place to refuel, refresh and share
+                the stories of the journey.
               </p>
 
-              <Link to="/restaurant" className="text-link">
+              <Link
+                to="/restaurant"
+                className="text-link"
+              >
                 Explore Restaurant & Bar
                 <ArrowRight size={17} />
               </Link>
@@ -307,7 +542,7 @@ function Home() {
         </div>
       </section>
 
-      {/* EXPERIENCES */}
+      {/* EXPERIENCES / DISCOVER KIBALE */}
       <section className="home-experiences section section--dark">
         <div className="container">
           <div className="home-experiences__header">
@@ -384,8 +619,8 @@ function Home() {
 
               <p>
                 Kibale is a destination where forest, wildlife, crater lakes
-                and rural landscapes come together. Base yourself at
-                Kibale Tourist&apos;s Inn and build your journey around the
+                and rural landscapes come together. Base yourself at Kibale
+                Tourist&apos;s Inn and build your journey around the
                 experiences that bring you to Western Uganda.
               </p>
 
@@ -418,7 +653,9 @@ function Home() {
             </div>
 
             <div className="home-crater__content">
-              <span className="eyebrow">Scenic Exploration</span>
+              <span className="eyebrow">
+                Scenic Exploration
+              </span>
 
               <h2 className="section-heading">
                 The crater lakes are
@@ -438,7 +675,10 @@ function Home() {
                 distinctive.
               </p>
 
-              <Link to="/crater-lakes" className="btn btn--dark">
+              <Link
+                to="/crater-lakes"
+                className="btn btn--dark"
+              >
                 Explore Crater Lakes
                 <ArrowRight size={17} />
               </Link>
@@ -456,8 +696,8 @@ function Home() {
             </span>
 
             <h2 className="section-heading">
-              More than somewhere
-              <em> to sleep.</em>
+              More than a place to stay.
+              <em> Your gateway to Kibale.</em>
             </h2>
 
             <p>
@@ -471,7 +711,10 @@ function Home() {
               const Icon = reason.icon;
 
               return (
-                <article className="reason-card" key={reason.title}>
+                <article
+                  className="reason-card"
+                  key={reason.title}
+                >
                   <div className="reason-card__icon">
                     <Icon size={24} />
                   </div>
@@ -491,7 +734,9 @@ function Home() {
         <div className="container">
           <div className="home-location__grid">
             <div>
-              <span className="eyebrow">Stay in Western Uganda</span>
+              <span className="eyebrow">
+                Stay in Western Uganda
+              </span>
 
               <h2 className="section-heading">
                 Your base for
@@ -531,7 +776,9 @@ function Home() {
       {/* BOOKING CTA */}
       <section
         className="home-cta"
-        style={{ "--cta-image": `url(${ctaKibaleImage})` }}
+        style={{
+          "--cta-image": `url(${ctaKibaleImage})`,
+        }}
       >
         <div className="home-cta__background" />
         <div className="home-cta__overlay" />
@@ -553,7 +800,10 @@ function Home() {
           </p>
 
           <div className="home-cta__actions">
-            <Link to="/booking" className="btn btn--gold">
+            <Link
+              to="/booking"
+              className="btn btn--gold"
+            >
               <CalendarCheck size={18} />
               Book Your Stay
             </Link>
@@ -561,7 +811,7 @@ function Home() {
             <a
               href="https://wa.me/256755517111"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="btn btn--outline-light"
             >
               <MessageCircle size={18} />

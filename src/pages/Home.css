@@ -1924,6 +1924,80 @@
 }
 
 /* =========================================================
+   PLANNING
+   ========================================================= */
+
+.home-planning {
+  background: var(--home-white);
+  color: var(--home-text);
+}
+
+.home-planning__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.65fr);
+  align-items: end;
+  gap: 50px;
+  margin-bottom: 55px;
+}
+
+.home-planning__header .section-heading {
+  max-width: 680px;
+  margin-bottom: 0;
+}
+
+.home-planning__header > p {
+  max-width: 430px;
+  margin: 0 0 7px;
+  color: var(--home-muted);
+  font-size: 0.94rem;
+  line-height: 1.85;
+}
+
+.home-planning__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.home-planning__card {
+  min-height: 285px;
+  padding: 30px;
+  border: 1px solid rgba(15, 61, 52, 0.13);
+  background: var(--home-ivory);
+}
+
+.home-planning__number {
+  display: block;
+  margin-bottom: 42px;
+  color: var(--home-gold-dark);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.home-planning__card h3 {
+  margin-bottom: 13px;
+  color: var(--home-forest);
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+  font-size: 1.65rem;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.home-planning__card p {
+  min-height: 68px;
+  margin-bottom: 14px;
+  color: var(--home-muted);
+  font-size: 0.82rem;
+  line-height: 1.75;
+}
+
+.home-planning__card .text-link {
+  margin-top: 0;
+  font-size: 0.67rem;
+}
+
+/* =========================================================
    CTA
    ========================================================= */
 
@@ -2361,6 +2435,19 @@
     gap: 35px;
   }
 
+  .home-planning__header {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .home-planning__header > p {
+    max-width: 650px;
+  }
+
+  .home-planning__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .home-cta {
     min-height: 580px;
   }
@@ -2437,6 +2524,18 @@
 
   .home-intro__story-badge {
     right: 20px;
+  }
+
+  .home-planning__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-planning__card {
+    min-height: 0;
+  }
+
+  .home-planning__number {
+    margin-bottom: 28px;
   }
 
   .home-stay .section-topline {

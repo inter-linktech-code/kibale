@@ -249,6 +249,94 @@
 }
 
 /* =========================================================
+   ASSISTANT CONVERSATION
+========================================================= */
+
+.whatsapp-message__intro p {
+  margin-bottom: 14px;
+}
+
+.whatsapp-message__conversation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 180px;
+  margin-bottom: 14px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+
+.whatsapp-message__bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 92%;
+  padding: 9px 11px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.whatsapp-message__bubble a {
+  color: #17633a;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.whatsapp-message__bubble a:hover {
+  color: #0d4226;
+}
+
+.whatsapp-message__bubble--visitor {
+  align-self: flex-end;
+  background: #e8f7ee;
+  color: #17633a;
+}
+
+.whatsapp-message__bubble--assistant {
+  align-self: flex-start;
+  background: #f3f5f3;
+  color: #59625b;
+}
+
+.whatsapp-message__topics {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.whatsapp-message__topic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 36px;
+  padding: 0 11px;
+  border: 1px solid #dfe8e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #24523c;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.whatsapp-message__topic svg {
+  color: #1fa855;
+}
+
+.whatsapp-message__topic:hover {
+  border-color: #1fa855;
+  background: #f0faf3;
+  color: #17633a;
+}
+
+/* =========================================================
    CHAT BUTTON
 ========================================================= */
 
@@ -285,6 +373,7 @@
 
 .whatsapp-floating-button:focus-visible,
 .whatsapp-message__close:focus-visible,
+.whatsapp-message__topic:focus-visible,
 .whatsapp-message__button:focus-visible {
   outline: 3px solid rgba(31, 168, 85, 0.3);
   outline-offset: 3px;
@@ -354,6 +443,7 @@
   .whatsapp-floating-button,
   .whatsapp-tooltip,
   .whatsapp-message,
+  .whatsapp-message__topic,
   .whatsapp-message__button {
     transition: none;
   }

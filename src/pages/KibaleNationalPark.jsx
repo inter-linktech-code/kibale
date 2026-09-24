@@ -11,7 +11,6 @@ import {
   Mountain,
   TreePine,
   Trees,
-  Users,
   Binoculars,
 } from "lucide-react";
 

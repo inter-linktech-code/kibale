@@ -164,6 +164,31 @@ const experiences = [
   },
 ];
 
+const planningPoints = [
+  {
+    number: "01",
+    title: "Choose your stay",
+    text: "Ask about private rooms, camping or a combination that suits your journey.",
+    link: "/accommodation",
+    linkLabel: "View stay options",
+  },
+  {
+    number: "02",
+    title: "Shape your days",
+    text: "Combine forest, wildlife, crater lake and local experiences around your time in Kibale.",
+    link: "/experiences",
+    linkLabel: "Explore experiences",
+  },
+  {
+    number: "03",
+    title: "Ask the team",
+    text: "Get current information about availability, rates, transport and special requests directly from the Inn.",
+    link: "https://wa.me/256755517111?text=Hello%20Kibale%20Tourist%27s%20Inn%2C%20I%20would%20like%20help%20planning%20my%20visit.",
+    linkLabel: "Talk on WhatsApp",
+    external: true,
+  },
+];
+
 function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -769,6 +794,54 @@ function Home() {
                 <span>Camping</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PLAN BEFORE ARRIVAL */}
+      <section className="home-planning section">
+        <div className="container">
+          <div className="home-planning__header">
+            <div>
+              <span className="eyebrow">Before You Book</span>
+
+              <h2 className="section-heading">
+                Make the most of
+                <em> your Kibale stay.</em>
+              </h2>
+            </div>
+
+            <p>
+              Start with the essentials, then speak with our team when you
+              need current details for your dates.
+            </p>
+          </div>
+
+          <div className="home-planning__grid">
+            {planningPoints.map((point) => (
+              <article className="home-planning__card" key={point.number}>
+                <span className="home-planning__number">{point.number}</span>
+                <h3>{point.title}</h3>
+                <p>{point.text}</p>
+
+                {point.external ? (
+                  <a
+                    href={point.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-link"
+                  >
+                    {point.linkLabel}
+                    <MessageCircle size={16} />
+                  </a>
+                ) : (
+                  <Link to={point.link} className="text-link">
+                    {point.linkLabel}
+                    <ArrowRight size={16} />
+                  </Link>
+                )}
+              </article>
+            ))}
           </div>
         </div>
       </section>

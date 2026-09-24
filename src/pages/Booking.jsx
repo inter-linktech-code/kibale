@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   CalendarCheck,
-  Check,
   Clock3,
   Mail,
   MapPin,
@@ -12,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import bookingHero from "../assets/booking-hero.jpg";
 import bookingRoom from "../assets/booking-room.jpg";
@@ -68,6 +68,41 @@ const stayOptions = [
 ];
 
 function Booking() {
+  const [submissionMessage, setSubmissionMessage] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const checkin = formData.get("checkin");
+    const checkout = formData.get("checkout");
+
+    if (new Date(checkout) <= new Date(checkin)) {
+      setSubmissionMessage("Check-out must be after check-in.");
+      return;
+    }
+
+    const enquiry = [
+      "Hello Kibale Tourist's Inn, I would like to make a booking enquiry.",
+      `Name: ${formData.get("name")}`,
+      `Email: ${formData.get("email") || "Not provided"}`,
+      `Phone / WhatsApp: ${formData.get("phone")}`,
+      `Guests: ${formData.get("guests")}`,
+      `Check-in: ${checkin}`,
+      `Check-out: ${checkout}`,
+      `Stay preference: ${formData.get("stay")}`,
+      `Experience interest: ${formData.get("experience") || "Not decided"}`,
+      `Message: ${formData.get("message") || "None"}`,
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/256755517111?text=${encodeURIComponent(enquiry)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    setSubmissionMessage("Your enquiry is ready in WhatsApp for our team.");
+  };
+
   return (
     <main className="booking-page">
       {/* HERO */}
@@ -238,7 +273,7 @@ function Booking() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              onSubmit={(event) => event.preventDefault()}
+              onSubmit={handleSubmit}
             >
               <div className="booking-form__top">
                 <div>
@@ -256,6 +291,7 @@ function Booking() {
                     type="text"
                     name="name"
                     placeholder="Your full name"
+                    required
                   />
                 </label>
 
@@ -274,12 +310,13 @@ function Booking() {
                     type="tel"
                     name="phone"
                     placeholder="+256..."
+                    required
                   />
                 </label>
 
                 <label>
                   Number of Guests
-                  <select name="guests" defaultValue="">
+                  <select name="guests" defaultValue="" required>
                     <option value="" disabled>
                       Select guests
                     </option>
@@ -294,17 +331,17 @@ function Booking() {
 
                 <label>
                   Check-in
-                  <input type="date" name="checkin" />
+                  <input type="date" name="checkin" required />
                 </label>
 
                 <label>
                   Check-out
-                  <input type="date" name="checkout" />
+                  <input type="date" name="checkout" required />
                 </label>
 
                 <label>
                   Stay Preference
-                  <select name="stay" defaultValue="">
+                  <select name="stay" defaultValue="" required>
                     <option value="" disabled>
                       Choose an option
                     </option>
@@ -340,6 +377,12 @@ function Booking() {
               </div>
 
               <div className="booking-form__footer">
+                {submissionMessage && (
+                  <p className="form-submission-message" role="status">
+                    {submissionMessage}
+                  </p>
+                )}
+
                 <p>
                   Your enquiry is a request for information. Our team will
                   confirm availability and arrangements with you.

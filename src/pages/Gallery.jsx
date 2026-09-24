@@ -2,12 +2,16 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   Camera,
+  ChevronLeft,
+  ChevronRight,
   Images,
   MapPin,
   MessageCircle,
   Sparkles,
+  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import galleryHero from "../assets/gallery-hero.jpg";
 import gallery01 from "../assets/gallery-01.jpg";
@@ -88,7 +92,72 @@ const galleryItems = [
   },
 ];
 
+const galleryFilters = [
+  "All",
+  "Accommodation",
+  "Restaurant",
+  "Nature",
+  "Wildlife",
+  "Camping",
+  "Culture",
+];
+
 function Gallery() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeImage, setActiveImage] = useState(null);
+
+  const filteredItems = galleryItems.filter(
+    (item) => activeFilter === "All" || item.category === activeFilter
+  );
+
+  const openImage = (item) => {
+    setActiveImage(item);
+  };
+
+  const closeImage = () => {
+    setActiveImage(null);
+  };
+
+  const moveImage = (direction) => {
+    const currentIndex = filteredItems.indexOf(activeImage);
+    const nextIndex =
+      (currentIndex + direction + filteredItems.length) % filteredItems.length;
+
+    setActiveImage(filteredItems[nextIndex]);
+  };
+
+  useEffect(() => {
+    if (!activeImage) {
+      return undefined;
+    }
+
+    const visibleItems = galleryItems.filter(
+      (item) => activeFilter === "All" || item.category === activeFilter
+    );
+
+    const navigate = (direction) => {
+      const currentIndex = visibleItems.indexOf(activeImage);
+      const nextIndex =
+        (currentIndex + direction + visibleItems.length) % visibleItems.length;
+
+      setActiveImage(visibleItems[nextIndex]);
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") closeImage();
+      if (event.key === "ArrowLeft") navigate(-1);
+      if (event.key === "ArrowRight") navigate(1);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [activeImage, activeFilter]);
+
   return (
     <main className="gallery-page">
       {/* HERO */}
@@ -216,8 +285,25 @@ function Gallery() {
             </p>
           </div>
 
+          <div className="gallery-filters" aria-label="Filter gallery images">
+            {galleryFilters.map((filter) => (
+              <button
+                type="button"
+                className={activeFilter === filter ? "is-active" : ""}
+                key={filter}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setActiveImage(null);
+                }}
+                aria-pressed={activeFilter === filter}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
           <div className="gallery-grid">
-            {galleryItems.map((item, index) => (
+            {filteredItems.map((item, index) => (
               <motion.figure
                 className={`gallery-item gallery-item--${(index % 6) + 1}`}
                 key={item.title}
@@ -228,6 +314,16 @@ function Gallery() {
                   duration: 0.6,
                   delay: (index % 3) * 0.06,
                 }}
+                role="button"
+                tabIndex="0"
+                onClick={() => openImage(item)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openImage(item);
+                  }
+                }}
+                aria-label={`View ${item.title} larger`}
               >
                 <img src={item.image} alt={item.title} />
 
@@ -238,6 +334,53 @@ function Gallery() {
               </motion.figure>
             ))}
           </div>
+
+          {activeImage && (
+            <div
+              className="gallery-lightbox"
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${activeImage.title} image viewer`}
+              onClick={(event) => {
+                if (event.target === event.currentTarget) closeImage();
+              }}
+            >
+              <button
+                type="button"
+                className="gallery-lightbox__close"
+                onClick={closeImage}
+                aria-label="Close image viewer"
+              >
+                <X size={22} />
+              </button>
+
+              <button
+                type="button"
+                className="gallery-lightbox__arrow gallery-lightbox__arrow--previous"
+                onClick={() => moveImage(-1)}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={27} />
+              </button>
+
+              <figure className="gallery-lightbox__content">
+                <img src={activeImage.image} alt={activeImage.title} />
+                <figcaption>
+                  <span>{activeImage.category}</span>
+                  <strong>{activeImage.title}</strong>
+                </figcaption>
+              </figure>
+
+              <button
+                type="button"
+                className="gallery-lightbox__arrow gallery-lightbox__arrow--next"
+                onClick={() => moveImage(1)}
+                aria-label="Next image"
+              >
+                <ChevronRight size={27} />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

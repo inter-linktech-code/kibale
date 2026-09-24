@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 
 import aboutHero from "../assets/about-hero.jpg";
 import aboutStory from "../assets/about-story.jpg";
-import aboutHospitality from "../assets/about-hospitality.jpg";
 import aboutKibale from "../assets/about-kibale.jpg";
 
 import "./About.css";

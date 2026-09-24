@@ -8,13 +8,6 @@ import {
   Phone,
 } from "lucide-react";
 
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaYoutube,
-} from "react-icons/fa";
-
 import "./Footer.css";
 import logo from "../assets/logo.png";
 
@@ -64,41 +57,6 @@ function Footer() {
                 around Kibale National Park and the crater lakes.
               </p>
 
-              {/* SOCIAL MEDIA */}
-
-              <div className="site-footer__socials">
-                <a
-                  href="#"
-                  className="site-footer__social"
-                  aria-label="Facebook"
-                >
-                  <FaFacebookF />
-                </a>
-
-                <a
-                  href="#"
-                  className="site-footer__social"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram />
-                </a>
-
-                <a
-                  href="#"
-                  className="site-footer__social"
-                  aria-label="LinkedIn"
-                >
-                  <FaLinkedinIn />
-                </a>
-
-                <a
-                  href="#"
-                  className="site-footer__social"
-                  aria-label="YouTube"
-                >
-                  <FaYoutube />
-                </a>
-              </div>
             </div>
 
             {/* EXPLORE */}

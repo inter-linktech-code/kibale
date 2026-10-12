@@ -1,3 +1,6 @@
+
+import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -10,8 +13,6 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 
 import bookingHero from "../assets/booking-hero.jpg";
 import bookingRoom from "../assets/booking-room.jpg";
@@ -19,6 +20,8 @@ import bookingDining from "../assets/booking-dining.jpg";
 import bookingNature from "../assets/booking-nature.jpg";
 
 import "./Booking.css";
+
+const WHATSAPP_NUMBER = "256755517111";
 
 const bookingBenefits = [
   {
@@ -29,12 +32,12 @@ const bookingBenefits = [
   {
     icon: Users,
     title: "Personal Service",
-    text: "Tell us what you need and we can help shape your stay around your journey.",
+    text: "Tell us what you need and discuss your stay with our team.",
   },
   {
     icon: MapPin,
     title: "Kibale Location",
-    text: "Use the Inn as a comfortable base for exploring Kibale and Western Uganda.",
+    text: "Use the Inn as a base for exploring Kibale and Western Uganda.",
   },
   {
     icon: Clock3,
@@ -54,7 +57,7 @@ const stayOptions = [
   {
     number: "02",
     title: "Restaurant & Bar",
-    text: "Enjoy breakfast, meals, refreshments and relaxed evenings at the Inn.",
+    text: "Ask about meals, refreshments and dining during your stay.",
     image: bookingDining,
     link: "/restaurant",
   },
@@ -67,40 +70,203 @@ const stayOptions = [
   },
 ];
 
+function getToday() {
+  const date = new Date();
+
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-");
+}
+
+function isValidDateString(value) {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+
+  const date = new Date(`${value}T00:00:00`);
+
+  return (
+    !Number.isNaN(date.getTime()) &&
+    date.toISOString().slice(0, 10) === value
+  );
+}
+
 function Booking() {
+  const [searchParams] = useSearchParams();
+  const today = getToday();
+
+  
+const requestedCheckin =
+  searchParams.get("checkin") ||
+  searchParams.get("checkIn") ||
+  "";
+
+const requestedCheckout =
+  searchParams.get("checkout") ||
+  searchParams.get("checkOut") ||
+  "";
+
+const requestedAdults = searchParams.get("adults") || "2";
+const requestedChildren = searchParams.get("children") || "0";
+const requestedRooms = searchParams.get("rooms") || "1";
+
+const requestedRoom = searchParams.get("room") || "";
+const requestedRoomView = searchParams.get("roomView") || "";
+const requestedStay = searchParams.get("stay") || "";
+
+
+  const initialCheckin =
+    isValidDateString(requestedCheckin) && requestedCheckin >= today
+      ? requestedCheckin
+      : "";
+
+  const initialCheckout =
+    isValidDateString(requestedCheckout) &&
+    requestedCheckout > (initialCheckin || today)
+      ? requestedCheckout
+      : "";
+
+  const [checkin, setCheckin] = useState(initialCheckin);
+  const [checkout, setCheckout] = useState(initialCheckout);
+
+  const [adults, setAdults] = useState(
+    /^[1-9]\d*$/.test(requestedAdults) &&
+      Number(requestedAdults) <= 10
+      ? requestedAdults
+      : "2"
+  );
+
+  const [children, setChildren] = useState(
+    /^\d+$/.test(requestedChildren) &&
+      Number(requestedChildren) <= 6
+      ? requestedChildren
+      : "0"
+  );
+
+  const [stay, setStay] = useState(
+    ["room", "camping", "both", "unsure"].includes(requestedStay)
+      ? requestedStay
+      : requestedRoom
+        ? "room"
+        : ""
+  );
+
+  
+const [rooms, setRooms] = useState(
+  /^\d+$/.test(requestedRooms) &&
+    Number(requestedRooms) >= 1 &&
+    Number(requestedRooms) <= 10
+    ? requestedRooms
+    : "1"
+);
+
+
+  const [experience, setExperience] = useState("");
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [submissionError, setSubmissionError] = useState("");
+
+  const handleCheckinChange = (event) => {
+    const nextCheckin = event.target.value;
+
+    setCheckin(nextCheckin);
+    setSubmissionMessage("");
+    setSubmissionError("");
+
+    if (checkout && nextCheckin && checkout <= nextCheckin) {
+      setCheckout("");
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const checkin = formData.get("checkin");
-    const checkout = formData.get("checkout");
+    setSubmissionMessage("");
+    setSubmissionError("");
 
-    if (new Date(checkout) <= new Date(checkin)) {
-      setSubmissionMessage("Check-out must be after check-in.");
+    if (!checkin || !checkout) {
+      setSubmissionError("Please select both check-in and check-out dates.");
       return;
     }
 
+    if (checkin < today) {
+      setSubmissionError("Check-in cannot be in the past.");
+      return;
+    }
+
+    if (checkout <= checkin) {
+      setSubmissionError("Check-out must be after check-in.");
+      return;
+    }
+
+    const formData = new FormData(event.currentTarget);
+
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    if (!name || !phone || !stay) {
+      setSubmissionError(
+        "Please complete your name, phone number and stay preference."
+      );
+      return;
+    }
+
+    const stayLabels = {
+      room: "Accommodation — Regular Comfort",
+      camping: "Camping",
+      both: "Accommodation + Camping",
+      unsure: "Not sure yet",
+    };
+
+    const experienceLabels = {
+      kibale: "Kibale National Park",
+      "crater-lakes": "Crater Lakes",
+      "guided-tours": "Guided Tours",
+      wildlife: "Wildlife & Nature",
+      none: "No experience planned yet",
+      "": "Not decided",
+    };
+
+    const totalGuests = Number(adults) + Number(children);
+
     const enquiry = [
       "Hello Kibale Tourist's Inn, I would like to make a booking enquiry.",
-      `Name: ${formData.get("name")}`,
-      `Email: ${formData.get("email") || "Not provided"}`,
-      `Phone / WhatsApp: ${formData.get("phone")}`,
-      `Guests: ${formData.get("guests")}`,
+      "",
+      `Full name: ${name}`,
+      `Email: ${email || "Not provided"}`,
+      `Phone / WhatsApp: ${phone}`,
+      `Adults: ${adults}`,
+      `Children: ${children}`,
+      `Total guests: ${totalGuests}`,
       `Check-in: ${checkin}`,
       `Check-out: ${checkout}`,
-      `Stay preference: ${formData.get("stay")}`,
-      `Experience interest: ${formData.get("experience") || "Not decided"}`,
-      `Message: ${formData.get("message") || "None"}`,
+      `Stay preference: ${stayLabels[stay] || stay}`,
+      `Room preference: ${requestedRoom || "Regular Comfort / to be discussed"}`,
+      `Room details of interest: ${requestedRoomView || "No specific room view selected"}`,
+      `Experience interest: ${experienceLabels[experience] || "Not decided"}`,
+      `Additional message: ${message || "None"}`,
+      "",
+      "Please confirm availability, rates and arrangements. I understand this is an enquiry and not a confirmed reservation.",
     ].join("\n");
 
-    window.open(
-      `https://wa.me/256755517111?text=${encodeURIComponent(enquiry)}`,
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(enquiry)}`;
+
+    const whatsappWindow = window.open(
+      whatsappUrl,
       "_blank",
       "noopener,noreferrer"
     );
-    setSubmissionMessage("Your enquiry is ready in WhatsApp for our team.");
+
+    if (whatsappWindow) {
+      setSubmissionMessage(
+        "WhatsApp should open with your enquiry. Review the details and press Send to contact our team."
+      );
+    } else {
+      setSubmissionMessage(
+        "Your enquiry is ready. If WhatsApp did not open, use the WhatsApp button below to contact our team."
+      );
+    }
   };
 
   return (
@@ -111,6 +277,7 @@ function Booking() {
           <img
             src={bookingHero}
             alt="Kibale Tourist's Inn in Western Uganda"
+            fetchPriority="high"
           />
         </div>
 
@@ -119,9 +286,9 @@ function Booking() {
         <div className="container booking-hero__content">
           <motion.div
             className="booking-hero__inner"
-            initial={{ opacity: 0, y: 35 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
+            transition={{ duration: 0.7 }}
           >
             <span className="eyebrow eyebrow--light">
               KIBALE TOURIST&apos;S INN • UGANDA
@@ -139,7 +306,7 @@ function Booking() {
 
             <div className="booking-hero__actions">
               <a
-                href="https://wa.me/256755517111"
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-gold"
@@ -161,7 +328,6 @@ function Booking() {
             <MapPin size={16} />
             <span>Isunga • Kibale • Western Uganda</span>
           </div>
-
           <span>Accommodation • Dining • Experiences</span>
         </div>
       </section>
@@ -172,10 +338,10 @@ function Booking() {
           <div className="booking-intro__grid">
             <motion.div
               className="booking-intro__heading"
-              initial={{ opacity: 0, x: -25 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.6 }}
             >
               <span className="eyebrow">YOUR STAY STARTS HERE</span>
 
@@ -187,21 +353,21 @@ function Booking() {
 
             <motion.div
               className="booking-intro__copy"
-              initial={{ opacity: 0, x: 25 }}
+              initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.6 }}
             >
               <p className="lead">
                 Whether you are visiting for wildlife, nature, relaxation or
-                simply passing through Western Uganda, Kibale Tourist&apos;s
-                Inn gives you a welcoming base from which to explore.
+                travelling through Western Uganda, Kibale Tourist&apos;s Inn
+                offers a welcoming base for your journey.
               </p>
 
               <p>
                 Send us your preferred dates and requirements. Our team can
-                help you understand the available accommodation options and
-                connect your stay with dining, camping and local experiences.
+                discuss accommodation, dining, camping and local experiences
+                with you.
               </p>
             </motion.div>
           </div>
@@ -214,10 +380,10 @@ function Booking() {
           <div className="booking-form-layout">
             <motion.div
               className="booking-form-intro"
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.6 }}
             >
               <span className="eyebrow">RESERVATIONS</span>
 
@@ -227,8 +393,9 @@ function Booking() {
               </h2>
 
               <p>
-                Complete the enquiry form and our team can get back to you
-                with information about your preferred dates and requirements.
+                Complete the enquiry form so our team can discuss your dates
+                and requirements. Your reservation is not confirmed until
+                the Inn confirms availability and arrangements.
               </p>
 
               <div className="booking-contact-card">
@@ -238,9 +405,8 @@ function Booking() {
 
                 <div>
                   <span>Prefer WhatsApp?</span>
-
                   <a
-                    href="https://wa.me/256755517111"
+                    href={`https://wa.me/${WHATSAPP_NUMBER}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -255,6 +421,11 @@ function Booking() {
                   <span>0782 159 173</span>
                 </a>
 
+                <a href="tel:+256786197552">
+                  <Phone size={17} />
+                  <span>0786 197 552</span>
+                </a>
+
                 <a href="mailto:info@kibaletouristsinn.com">
                   <Mail size={17} />
                   <span>Email our team</span>
@@ -262,17 +433,17 @@ function Booking() {
 
                 <div>
                   <MapPin size={17} />
-                  <span>G833+V33 Isunga, Uganda</span>
+                  <span>Isunga, Kibale, Uganda</span>
                 </div>
               </div>
             </motion.div>
 
             <motion.form
               className="booking-form"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.6 }}
               onSubmit={handleSubmit}
             >
               <div className="booking-form__top">
@@ -280,17 +451,17 @@ function Booking() {
                   <span className="small-label">BOOKING ENQUIRY</span>
                   <h3>Plan Your Visit</h3>
                 </div>
-
                 <CalendarCheck size={25} />
               </div>
 
               <div className="booking-form__grid">
                 <label>
-                  Full Name
+                  Full Name *
                   <input
                     type="text"
                     name="name"
                     placeholder="Your full name"
+                    autoComplete="name"
                     required
                   />
                 </label>
@@ -301,51 +472,96 @@ function Booking() {
                     type="email"
                     name="email"
                     placeholder="you@example.com"
+                    autoComplete="email"
                   />
                 </label>
 
                 <label>
-                  Phone / WhatsApp
+                  Phone / WhatsApp *
                   <input
                     type="tel"
                     name="phone"
                     placeholder="+256..."
+                    autoComplete="tel"
                     required
                   />
                 </label>
 
                 <label>
-                  Number of Guests
-                  <select name="guests" defaultValue="" required>
-                    <option value="" disabled>
-                      Select guests
-                    </option>
-                    <option value="1">1 guest</option>
-                    <option value="2">2 guests</option>
-                    <option value="3">3 guests</option>
-                    <option value="4">4 guests</option>
-                    <option value="5">5 guests</option>
-                    <option value="6+">6+ guests</option>
+                  Adults *
+                  <select
+                    name="adults"
+                    value={adults}
+                    onChange={(event) => setAdults(event.target.value)}
+                    required
+                  >
+                    {Array.from({ length: 10 }, (_, index) => index + 1).map(
+                      (number) => (
+                        <option value={String(number)} key={number}>
+                          {number} {number === 1 ? "adult" : "adults"}
+                        </option>
+                      )
+                    )}
                   </select>
                 </label>
 
                 <label>
-                  Check-in
-                  <input type="date" name="checkin" required />
+                  Children
+                  <select
+                    name="children"
+                    value={children}
+                    onChange={(event) => setChildren(event.target.value)}
+                  >
+                    {Array.from({ length: 7 }, (_, index) => index).map(
+                      (number) => (
+                        <option value={String(number)} key={number}>
+                          {number} {number === 1 ? "child" : "children"}
+                        </option>
+                      )
+                    )}
+                  </select>
                 </label>
 
                 <label>
-                  Check-out
-                  <input type="date" name="checkout" required />
+                  Check-in *
+                  <input
+                    type="date"
+                    name="checkin"
+                    value={checkin}
+                    min={today}
+                    onChange={handleCheckinChange}
+                    required
+                  />
                 </label>
 
                 <label>
-                  Stay Preference
-                  <select name="stay" defaultValue="" required>
+                  Check-out *
+                  <input
+                    type="date"
+                    name="checkout"
+                    value={checkout}
+                    min={checkin || today}
+                    onChange={(event) => {
+                      setCheckout(event.target.value);
+                      setSubmissionMessage("");
+                      setSubmissionError("");
+                    }}
+                    required
+                  />
+                </label>
+
+                <label>
+                  Stay Preference *
+                  <select
+                    name="stay"
+                    value={stay}
+                    onChange={(event) => setStay(event.target.value)}
+                    required
+                  >
                     <option value="" disabled>
                       Choose an option
                     </option>
-                    <option value="room">Accommodation</option>
+                    <option value="room">Accommodation — Regular Comfort</option>
                     <option value="camping">Camping</option>
                     <option value="both">Accommodation + Camping</option>
                     <option value="unsure">Not sure yet</option>
@@ -354,10 +570,12 @@ function Booking() {
 
                 <label>
                   Experience Interest
-                  <select name="experience" defaultValue="">
-                    <option value="" disabled>
-                      Choose an option
-                    </option>
+                  <select
+                    name="experience"
+                    value={experience}
+                    onChange={(event) => setExperience(event.target.value)}
+                  >
+                    <option value="">Choose an option</option>
                     <option value="kibale">Kibale National Park</option>
                     <option value="crater-lakes">Crater Lakes</option>
                     <option value="guided-tours">Guided Tours</option>
@@ -370,22 +588,51 @@ function Booking() {
                   Message
                   <textarea
                     name="message"
-                    rows="6"
+                    rows={5}
                     placeholder="Tell us anything that would help us plan your stay..."
                   />
                 </label>
               </div>
 
-              <div className="booking-form__footer">
-                {submissionMessage && (
-                  <p className="form-submission-message" role="status">
-                    {submissionMessage}
-                  </p>
-                )}
+              
+{(requestedRoom || requestedRoomView) && (
+  <p className="booking-selected-room">
+    <BedDouble size={17} aria-hidden="true" />
+    Room preference:{" "}
+    <strong>
+      {[requestedRoom, requestedRoomView]
+        .filter(Boolean)
+        .join(" — ")}
+    </strong>
+  </p>
+)}
 
+
+              {submissionError && (
+                <p className="form-error-message" role="alert">
+                  {submissionError}
+                </p>
+              )}
+
+              {submissionMessage && (
+                <div className="form-submission-message" role="status">
+                  <p>{submissionMessage}</p>
+                  <a
+                    href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open WhatsApp
+                    <ArrowRight size={16} />
+                  </a>
+                </div>
+              )}
+
+              <div className="booking-form__footer">
                 <p>
-                  Your enquiry is a request for information. Our team will
-                  confirm availability and arrangements with you.
+                  This form prepares a booking enquiry in WhatsApp. Your
+                  reservation is not confirmed until our team confirms
+                  availability and arrangements.
                 </p>
 
                 <button type="submit" className="btn btn-dark">
@@ -398,11 +645,31 @@ function Booking() {
         </div>
       </section>
 
+      
+<label>
+  Rooms *
+  <select
+    name="rooms"
+    value={rooms}
+    onChange={(event) => setRooms(event.target.value)}
+    required
+  >
+    {Array.from({ length: 10 }, (_, index) => index + 1).map(
+      (number) => (
+        <option value={String(number)} key={number}>
+          {number} {number === 1 ? "room" : "rooms"}
+        </option>
+      )
+    )}
+  </select>
+</label>
+
+
       {/* BENEFITS */}
       <section className="section booking-benefits">
         <div className="container">
           <div className="section-heading-centered">
-            <span className="eyebrow">WHY BOOK DIRECTLY</span>
+            <span className="eyebrow">WHY CONTACT US DIRECTLY</span>
 
             <h2>
               Make planning
@@ -410,8 +677,8 @@ function Booking() {
             </h2>
 
             <p>
-              Tell us what matters to you and let us help connect the pieces
-              of your Kibale journey.
+              Tell us what matters to you and discuss the details of your
+              Kibale journey directly with the Inn team.
             </p>
           </div>
 
@@ -423,13 +690,10 @@ function Booking() {
                 <motion.article
                   className="booking-benefit-card"
                   key={item.title}
-                  initial={{ opacity: 0, y: 25 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.08,
-                  }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
                 >
                   <div className="booking-benefit-card__number">
                     0{index + 1}
@@ -440,7 +704,6 @@ function Booking() {
                   </div>
 
                   <h3>{item.title}</h3>
-
                   <p>{item.text}</p>
                 </motion.article>
               );
@@ -455,7 +718,6 @@ function Booking() {
           <div className="booking-options__header">
             <div>
               <span className="eyebrow">BUILD YOUR STAY</span>
-
               <h2>
                 Stay.
                 <span>Dine. Explore.</span>
@@ -473,22 +735,18 @@ function Booking() {
               <motion.article
                 className="booking-option-card"
                 key={option.number}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
               >
                 <div className="booking-option-card__image">
-                  <img src={option.image} alt={option.title} />
+                  <img src={option.image} alt={option.title} loading="lazy" />
                   <span>{option.number}</span>
                 </div>
 
                 <div className="booking-option-card__content">
                   <h3>{option.title}</h3>
-
                   <p>{option.text}</p>
 
                   <Link to={option.link} className="inline-link">
@@ -507,10 +765,10 @@ function Booking() {
         <div className="container">
           <motion.div
             className="booking-cta__inner"
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
           >
             <CalendarCheck size={28} />
 
@@ -530,7 +788,7 @@ function Booking() {
 
             <div className="booking-cta__actions">
               <a
-                href="https://wa.me/256755517111"
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-gold"
@@ -549,6 +807,10 @@ function Booking() {
       </section>
     </main>
   );
+}
+
+function BedDoubleIcon() {
+  return <CalendarCheck size={17} aria-hidden="true" />;
 }
 
 export default Booking;

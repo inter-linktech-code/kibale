@@ -1,20 +1,26 @@
+
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   ArrowLeft,
   ArrowRight,
   CalendarCheck,
+  CalendarDays,
   Check,
+  ChevronDown,
   Compass,
   MapPin,
   MessageCircle,
   Mountain,
   Phone,
+  Search,
   TentTree,
   Trees,
   Utensils,
+  Users,
   Waves,
+  BedDouble,
 } from "lucide-react";
 
 import "./Home.css";
@@ -106,26 +112,22 @@ const reasons = [
   {
     icon: MapPin,
     title: "A Strategic Kibale Location",
-    text:
-      "Stay within easy reach of Kibale's natural attractions while enjoying a calm and comfortable place to return to after a day of exploration.",
+    text: "Stay within easy reach of Kibale's natural attractions while enjoying a calm and comfortable place to return to after a day of exploration.",
   },
   {
     icon: Compass,
     title: "Experiences Beyond the Room",
-    text:
-      "Discover guided experiences around Kibale National Park, crater lakes and the surrounding landscapes with experiences designed around your stay.",
+    text: "Discover guided experiences around Kibale National Park, crater lakes and the surrounding landscapes with experiences designed around your stay.",
   },
   {
     icon: Utensils,
     title: "Restaurant & Bar",
-    text:
-      "Enjoy relaxed dining, refreshing drinks and welcoming hospitality without having to leave the inn.",
+    text: "Enjoy relaxed dining, refreshing drinks and welcoming hospitality without having to leave the inn.",
   },
   {
     icon: Trees,
     title: "Nature at Your Doorstep",
-    text:
-      "Kibale is a destination for travellers who want to reconnect with nature and experience the landscapes, wildlife and character of Western Uganda.",
+    text: "Kibale is a destination for travellers who want to reconnect with nature and experience the landscapes, wildlife and character of Western Uganda.",
   },
 ];
 
@@ -134,32 +136,28 @@ const experiences = [
     icon: Trees,
     number: "01",
     title: "Kibale National Park",
-    text:
-      "Explore one of Uganda's remarkable forest destinations and plan your stay around the natural experiences that make Kibale special.",
+    text: "Explore one of Uganda's remarkable forest destinations and plan your stay around the natural experiences that make Kibale special.",
     link: "/kibale-national-park",
   },
   {
     icon: Mountain,
     number: "02",
     title: "Crater Lakes",
-    text:
-      "Discover the dramatic volcanic crater lake landscapes surrounding Kibale with guided excursions and scenic exploration.",
+    text: "Discover the dramatic volcanic crater lake landscapes surrounding Kibale with guided excursions and scenic exploration.",
     link: "/crater-lakes",
   },
   {
     icon: Compass,
     number: "03",
     title: "Guided Tours",
-    text:
-      "Turn your visit into a richer journey with guided exploration of local attractions, nature and the landscapes around Kibale.",
+    text: "Turn your visit into a richer journey with guided exploration of local attractions, nature and the landscapes around Kibale.",
     link: "/guided-tours",
   },
   {
     icon: TentTree,
     number: "04",
     title: "Camping",
-    text:
-      "For travellers who prefer a closer connection with the outdoors, our camping experience brings nature even closer.",
+    text: "For travellers who prefer a closer connection with the outdoors, our camping experience brings nature even closer.",
     link: "/camping",
   },
 ];
@@ -189,42 +187,123 @@ const planningPoints = [
   },
 ];
 
+function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function addDays(dateString, days) {
+  const date = new Date(`${dateString}T12:00:00`);
+  date.setDate(date.getDate() + days);
+
+  return getLocalDateString(date);
+}
+
+function calculateNights(checkIn, checkOut) {
+  if (!checkIn || !checkOut) return 0;
+
+  const start = new Date(`${checkIn}T12:00:00`);
+  const end = new Date(`${checkOut}T12:00:00`);
+
+  return Math.round((end - start) / (1000 * 60 * 60 * 24));
+}
+
 function Home() {
+  const navigate = useNavigate();
+
+  const today = getLocalDateString();
+  const tomorrow = addDays(today, 1);
+
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Booking form state
+  const [checkIn, setCheckIn] = useState(today);
+  const [checkOut, setCheckOut] = useState(tomorrow);
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [rooms, setRooms] = useState(1);
+  const [bookingError, setBookingError] = useState("");
+
   useEffect(() => {
-    if (isPaused) {
-      return undefined;
-    }
+    if (isPaused) return undefined;
 
     const timer = setInterval(() => {
-      setActiveSlide(
-        (current) => (current + 1) % heroSlides.length
-      );
+      setActiveSlide((current) => (current + 1) % heroSlides.length);
     }, 7000);
 
     return () => clearInterval(timer);
   }, [isPaused]);
 
-  const goToSlide = (index) => {
-    setActiveSlide(index);
-  };
+  const goToSlide = (index) => setActiveSlide(index);
 
   const goToPrevious = () => {
     setActiveSlide(
-      (current) =>
-        (current - 1 + heroSlides.length) % heroSlides.length
+      (current) => (current - 1 + heroSlides.length) % heroSlides.length
     );
   };
 
   const goToNext = () => {
-    setActiveSlide(
-      (current) => (current + 1) % heroSlides.length
-    );
+    setActiveSlide((current) => (current + 1) % heroSlides.length);
+  };
+
+  const handleCheckInChange = (event) => {
+    const nextCheckIn = event.target.value;
+
+    setCheckIn(nextCheckIn);
+    setBookingError("");
+
+    if (checkOut <= nextCheckIn) {
+      setCheckOut(addDays(nextCheckIn, 1));
+    }
+  };
+
+  const handleCheckOutChange = (event) => {
+    setCheckOut(event.target.value);
+    setBookingError("");
+  };
+
+  const handleBookingSubmit = (event) => {
+    event.preventDefault();
+
+    if (!checkIn || !checkOut) {
+      setBookingError("Please select your check-in and check-out dates.");
+      return;
+    }
+
+    if (checkIn < getLocalDateString()) {
+      setBookingError("Check-in cannot be in the past.");
+      return;
+    }
+
+    if (checkOut <= checkIn) {
+      setBookingError("Check-out must be after your check-in date.");
+      return;
+    }
+
+    if (adults < 1 || children < 0 || rooms < 1) {
+      setBookingError("Please check your guest and room selections.");
+      return;
+    }
+
+    
+const params = new URLSearchParams({
+  checkin: checkIn,
+  checkout: checkOut,
+  adults: String(adults),
+  children: String(children),
+  rooms: String(rooms),
+});
+
+navigate(`/booking?${params.toString()}`);
+
   };
 
   const currentSlide = heroSlides[activeSlide];
+  const nights = calculateNights(checkIn, checkOut);
 
   return (
     <main className="home-page">
@@ -250,7 +329,6 @@ function Home() {
                 alt={`${slide.title} ${slide.accent} at Kibale Tourist's Inn`}
                 className="home-hero__image"
               />
-
               <div className="home-hero__overlay" />
             </div>
           ))}
@@ -260,14 +338,12 @@ function Home() {
           <div className="home-hero__copy">
             <div className="home-hero__counter">
               <span>0{activeSlide + 1}</span>
-
               <div className="home-hero__counter-line">
                 <span
                   key={activeSlide}
                   className="home-hero__counter-progress"
                 />
               </div>
-
               <span>0{heroSlides.length}</span>
             </div>
 
@@ -288,10 +364,7 @@ function Home() {
             </p>
 
             <div className="home-hero__actions">
-              <Link
-                to={currentSlide.primaryLink}
-                className="btn btn--gold"
-              >
+              <Link to={currentSlide.primaryLink} className="btn btn--gold">
                 {currentSlide.primaryLabel}
                 <ArrowRight size={18} />
               </Link>
@@ -341,13 +414,9 @@ function Home() {
                 }`}
                 onClick={() => goToSlide(index)}
                 aria-label={`Go to slide ${index + 1}`}
-                aria-current={
-                  index === activeSlide ? "true" : undefined
-                }
+                aria-current={index === activeSlide ? "true" : undefined}
               >
-                <span>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+                <span>{String(index + 1).padStart(2, "0")}</span>
               </button>
             ))}
           </div>
@@ -363,17 +432,150 @@ function Home() {
         </div>
       </section>
 
+      {/* LODGE BOOKING BAR */}
+      <section className="home-booking" aria-labelledby="booking-bar-title">
+        <div className="container">
+          <form className="booking-bar" onSubmit={handleBookingSubmit}>
+            <div className="booking-bar__heading">
+              <span className="booking-bar__icon">
+                <CalendarCheck size={22} />
+              </span>
+
+              <div>
+                <span className="eyebrow">Your Kibale Escape</span>
+                <h2 id="booking-bar-title">Plan Your Stay</h2>
+                <p>Choose your dates and prepare for your journey.</p>
+              </div>
+            </div>
+
+            <div className="booking-bar__fields">
+              <div className="booking-field">
+                <label htmlFor="home-check-in">
+                  <CalendarDays size={17} />
+                  Check-in
+                </label>
+                <input
+                  id="home-check-in"
+                  type="date"
+                  value={checkIn}
+                  min={today}
+                  onChange={handleCheckInChange}
+                  required
+                />
+                <span className="booking-field__hint">Arrival date</span>
+              </div>
+
+              <div className="booking-field">
+                <label htmlFor="home-check-out">
+                  <CalendarDays size={17} />
+                  Check-out
+                </label>
+                <input
+                  id="home-check-out"
+                  type="date"
+                  value={checkOut}
+                  min={addDays(checkIn, 1)}
+                  onChange={handleCheckOutChange}
+                  required
+                />
+                <span className="booking-field__hint">
+                  {nights} {nights === 1 ? "night" : "nights"} stay
+                </span>
+              </div>
+
+              <div className="booking-field">
+                <label htmlFor="home-adults">
+                  <Users size={17} />
+                  Adults
+                </label>
+                <select
+                  id="home-adults"
+                  value={adults}
+                  onChange={(event) => setAdults(Number(event.target.value))}
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+                    <option key={number} value={number}>
+                      {number} {number === 1 ? "Adult" : "Adults"}
+                    </option>
+                  ))}
+                </select>
+                <span className="booking-field__hint">Age 13+</span>
+              </div>
+
+              <div className="booking-field">
+                <label htmlFor="home-children">
+                  <Users size={17} />
+                  Children
+                </label>
+                <select
+                  id="home-children"
+                  value={children}
+                  onChange={(event) =>
+                    setChildren(Number(event.target.value))
+                  }
+                >
+                  {[0, 1, 2, 3, 4, 5, 6].map((number) => (
+                    <option key={number} value={number}>
+                      {number} {number === 1 ? "Child" : "Children"}
+                    </option>
+                  ))}
+                </select>
+                <span className="booking-field__hint">Ages 0–12</span>
+              </div>
+
+              <div className="booking-field">
+                <label htmlFor="home-rooms">
+                  <BedDouble size={17} />
+                  Rooms
+                </label>
+                <select
+                  id="home-rooms"
+                  value={rooms}
+                  onChange={(event) => setRooms(Number(event.target.value))}
+                >
+                  {[1, 2, 3, 4, 5, 6].map((number) => (
+                    <option key={number} value={number}>
+                      {number} {number === 1 ? "Room" : "Rooms"}
+                    </option>
+                  ))}
+                </select>
+                <span className="booking-field__hint">Rooms required</span>
+              </div>
+
+              <button type="submit" className="booking-bar__submit">
+                <Search size={18} />
+                <span>Check Availability</span>
+                <ArrowRight size={17} />
+              </button>
+            </div>
+
+            {bookingError && (
+              <p className="booking-bar__error" role="alert">
+                {bookingError}
+              </p>
+            )}
+
+            <div className="booking-bar__footer">
+              <span>
+                <Check size={15} />
+                Personalised booking assistance
+              </span>
+              <span>
+                <Check size={15} />
+                Comfortable stays in Kibale
+              </span>
+            </div>
+          </form>
+        </div>
+      </section>
+
       {/* INTRODUCTION */}
       <section className="home-intro section">
         <div className="container">
           <div className="home-intro__grid">
             <div className="home-intro__label">
-              <span className="eyebrow">
-                Welcome to Kibale
-              </span>
-
+              <span className="eyebrow">Welcome to Kibale</span>
               <div className="home-intro__vertical-line" />
-
               <span className="home-intro__small">
                 A place to stay.
                 <br />
@@ -388,7 +590,6 @@ function Home() {
                     src={aboutStoryImage}
                     alt="Kibale Tourist's Inn hospitality in Western Uganda"
                   />
-
                   <div className="home-intro__story-badge">
                     <span>Our Story</span>
                     <strong>Kibale</strong>
@@ -396,10 +597,7 @@ function Home() {
                 </div>
 
                 <div className="home-intro__story-copy">
-                  <span className="eyebrow">
-                    Discover Our Story
-                  </span>
-
+                  <span className="eyebrow">Discover Our Story</span>
                   <h2 className="section-heading">
                     Comfort meets the
                     <em> spirit of Western Uganda.</em>
@@ -415,11 +613,10 @@ function Home() {
                   </p>
 
                   <p>
-                    Whether Kibale is your destination, your base for
-                    exploring the surrounding crater lakes or part of a wider
-                    Uganda safari, our aim is simple: make your time here
-                    comfortable, personal and connected to the destination
-                    around you.
+                    Whether Kibale is your destination, your base for exploring
+                    the surrounding crater lakes or part of a wider Uganda
+                    safari, our aim is simple: make your time here comfortable,
+                    personal and connected to the destination around you.
                   </p>
 
                   <Link to="/about" className="text-link">
@@ -438,20 +635,14 @@ function Home() {
         <div className="container">
           <div className="section-topline">
             <div>
-              <span className="eyebrow">
-                Stay With Us
-              </span>
-
+              <span className="eyebrow">Stay With Us</span>
               <h2 className="section-heading">
                 A comfortable base for
                 <em> your Kibale journey.</em>
               </h2>
             </div>
 
-            <Link
-              to="/accommodation"
-              className="text-link"
-            >
+            <Link to="/accommodation" className="text-link">
               View Accommodation
               <ArrowRight size={17} />
             </Link>
@@ -463,7 +654,6 @@ function Home() {
                 src={accommodationImage}
                 alt="Comfortable accommodation at Kibale Tourist's Inn in Western Uganda"
               />
-
               <div className="home-image-card__caption">
                 <span>Stay</span>
                 <strong>Comfortable Accommodation</strong>
@@ -471,10 +661,7 @@ function Home() {
             </div>
 
             <div className="home-stay__content">
-              <span className="number-label">
-                01 / ACCOMMODATION
-              </span>
-
+              <span className="number-label">01 / ACCOMMODATION</span>
               <h3>
                 Rest well.
                 <br />
@@ -495,16 +682,12 @@ function Home() {
                     <span>
                       <Check size={14} />
                     </span>
-
                     {feature}
                   </li>
                 ))}
               </ul>
 
-              <Link
-                to="/accommodation"
-                className="btn btn--dark"
-              >
+              <Link to="/accommodation" className="btn btn--dark">
                 Discover Your Stay
                 <ArrowRight size={17} />
               </Link>
@@ -518,10 +701,7 @@ function Home() {
         <div className="container">
           <div className="home-dining__grid">
             <div className="home-dining__content">
-              <span className="eyebrow">
-                Restaurant & Bar
-              </span>
-
+              <span className="eyebrow">Restaurant & Bar</span>
               <h2 className="section-heading">
                 Taste the journey.
                 <br />
@@ -542,10 +722,7 @@ function Home() {
                 the stories of the journey.
               </p>
 
-              <Link
-                to="/restaurant"
-                className="text-link"
-              >
+              <Link to="/restaurant" className="text-link">
                 Explore Restaurant & Bar
                 <ArrowRight size={17} />
               </Link>
@@ -556,7 +733,6 @@ function Home() {
                 src={restaurantImage}
                 alt="Restaurant and dining experience at Kibale Tourist's Inn"
               />
-
               <div className="home-dining__badge">
                 <Utensils size={22} />
                 <span>Restaurant</span>
@@ -567,15 +743,12 @@ function Home() {
         </div>
       </section>
 
-      {/* EXPERIENCES / DISCOVER KIBALE */}
+      {/* EXPERIENCES */}
       <section className="home-experiences section section--dark">
         <div className="container">
           <div className="home-experiences__header">
             <div>
-              <span className="eyebrow eyebrow--gold">
-                Discover Kibale
-              </span>
-
+              <span className="eyebrow eyebrow--gold">Discover Kibale</span>
               <h2 className="section-heading section-heading--light">
                 Your stay is only
                 <em> the beginning.</em>
@@ -605,9 +778,7 @@ function Home() {
 
                   <div>
                     <h3>{experience.title}</h3>
-
                     <p>{experience.text}</p>
-
                     <span className="experience-card__link">
                       Explore
                       <ArrowRight size={16} />
@@ -628,14 +799,10 @@ function Home() {
               src={kibaleForestImage}
               alt="Kibale forest landscape in Western Uganda"
             />
-
             <div className="home-kibale__overlay" />
 
             <div className="home-kibale__content">
-              <span className="eyebrow eyebrow--gold">
-                The Destination
-              </span>
-
+              <span className="eyebrow eyebrow--gold">The Destination</span>
               <h2>
                 Discover the wild
                 <br />
@@ -645,14 +812,11 @@ function Home() {
               <p>
                 Kibale is a destination where forest, wildlife, crater lakes
                 and rural landscapes come together. Base yourself at Kibale
-                Tourist&apos;s Inn and build your journey around the
-                experiences that bring you to Western Uganda.
+                Tourist&apos;s Inn and build your journey around the experiences
+                that bring you to Western Uganda.
               </p>
 
-              <Link
-                to="/kibale-national-park"
-                className="btn btn--gold"
-              >
+              <Link to="/kibale-national-park" className="btn btn--gold">
                 Discover Kibale National Park
                 <ArrowRight size={18} />
               </Link>
@@ -670,7 +834,6 @@ function Home() {
                 src={craterLakesImage}
                 alt="Crater lake scenery around Kibale in Western Uganda"
               />
-
               <div className="home-crater__stamp">
                 <Waves size={20} />
                 <span>Western Uganda</span>
@@ -678,10 +841,7 @@ function Home() {
             </div>
 
             <div className="home-crater__content">
-              <span className="eyebrow">
-                Scenic Exploration
-              </span>
-
+              <span className="eyebrow">Scenic Exploration</span>
               <h2 className="section-heading">
                 The crater lakes are
                 <em> waiting to be discovered.</em>
@@ -700,10 +860,7 @@ function Home() {
                 distinctive.
               </p>
 
-              <Link
-                to="/crater-lakes"
-                className="btn btn--dark"
-              >
+              <Link to="/crater-lakes" className="btn btn--dark">
                 Explore Crater Lakes
                 <ArrowRight size={17} />
               </Link>
@@ -716,10 +873,7 @@ function Home() {
       <section className="home-reasons section">
         <div className="container">
           <div className="home-reasons__header">
-            <span className="eyebrow">
-              Why Kibale Tourist&apos;s Inn
-            </span>
-
+            <span className="eyebrow">Why Kibale Tourist&apos;s Inn</span>
             <h2 className="section-heading">
               More than a place to stay.
               <em> Your gateway to Kibale.</em>
@@ -736,16 +890,11 @@ function Home() {
               const Icon = reason.icon;
 
               return (
-                <article
-                  className="reason-card"
-                  key={reason.title}
-                >
+                <article className="reason-card" key={reason.title}>
                   <div className="reason-card__icon">
                     <Icon size={24} />
                   </div>
-
                   <h3>{reason.title}</h3>
-
                   <p>{reason.text}</p>
                 </article>
               );
@@ -759,10 +908,7 @@ function Home() {
         <div className="container">
           <div className="home-location__grid">
             <div>
-              <span className="eyebrow">
-                Stay in Western Uganda
-              </span>
-
+              <span className="eyebrow">Stay in Western Uganda</span>
               <h2 className="section-heading">
                 Your base for
                 <em> Kibale exploration.</em>
@@ -798,13 +944,12 @@ function Home() {
         </div>
       </section>
 
-      {/* PLAN BEFORE ARRIVAL */}
+      {/* PLANNING */}
       <section className="home-planning section">
         <div className="container">
           <div className="home-planning__header">
             <div>
               <span className="eyebrow">Before You Book</span>
-
               <h2 className="section-heading">
                 Make the most of
                 <em> your Kibale stay.</em>
@@ -849,9 +994,7 @@ function Home() {
       {/* BOOKING CTA */}
       <section
         className="home-cta"
-        style={{
-          "--cta-image": `url(${ctaKibaleImage})`,
-        }}
+        style={{ "--cta-image": `url(${ctaKibaleImage})` }}
       >
         <div className="home-cta__background" />
         <div className="home-cta__overlay" />
@@ -873,10 +1016,7 @@ function Home() {
           </p>
 
           <div className="home-cta__actions">
-            <Link
-              to="/booking"
-              className="btn btn--gold"
-            >
+            <Link to="/booking" className="btn btn--gold">
               <CalendarCheck size={18} />
               Book Your Stay
             </Link>
@@ -891,10 +1031,7 @@ function Home() {
               WhatsApp Us
             </a>
 
-            <a
-              href="tel:+256782159173"
-              className="btn btn--outline-light"
-            >
+            <a href="tel:+256782159173" className="btn btn--outline-light">
               <Phone size={18} />
               Call Us
             </a>

@@ -3018,3 +3018,349 @@
     transform: none !important;
   }
 }
+
+
+/* ==========================================
+   KIBALE TOURIST'S INN
+   LUXURY LODGE BOOKING BAR
+========================================== */
+
+.home-booking {
+  position: relative;
+  z-index: 5;
+  padding: 0 0 42px;
+  background: #f8f6f0;
+}
+
+.booking-bar {
+  position: relative;
+  margin-top: -1px;
+  padding: 30px 34px 20px;
+  background: #fffefa;
+  border: 1px solid rgba(174, 142, 77, 0.25);
+  border-top: 3px solid #b89550;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 18px 48px rgba(29, 51, 37, 0.09);
+}
+
+.booking-bar__heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.booking-bar__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  color: #b89550;
+  background: #f5f0e3;
+  border-radius: 50%;
+}
+
+.booking-bar__heading .eyebrow {
+  display: block;
+  margin-bottom: 5px;
+  color: #a17d3d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.booking-bar__heading h2 {
+  margin: 0;
+  color: #183c2b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.booking-bar__heading p {
+  margin: 6px 0 0;
+  color: #77786f;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.booking-bar__fields {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(190px, 1.35fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.booking-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 15px 13px 12px;
+  background: #ffffff;
+  border: 1px solid #e8e4d9;
+  border-radius: 6px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.booking-field:focus-within {
+  border-color: #b89550;
+  box-shadow: 0 0 0 3px rgba(184, 149, 80, 0.1);
+}
+
+.booking-field label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  color: #254a35;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.booking-field label svg {
+  flex-shrink: 0;
+  color: #b89550;
+}
+
+.booking-field input,
+.booking-field select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 28px;
+  padding: 0;
+  color: #263c2e;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.booking-field input {
+  color-scheme: light;
+}
+
+.booking-field select {
+  cursor: pointer;
+}
+
+.booking-field input:focus,
+.booking-field select:focus {
+  outline: none;
+}
+
+.booking-field__hint {
+  display: block;
+  margin-top: 7px;
+  color: #96948a;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.booking-bar__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 100%;
+  padding: 15px 16px;
+  color: #fffdf7;
+  background: #1b422e;
+  border: 1px solid #1b422e;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.booking-bar__submit svg {
+  flex-shrink: 0;
+}
+
+.booking-bar__submit:hover {
+  background: #b18d4b;
+  border-color: #b18d4b;
+}
+
+.booking-bar__submit:focus-visible {
+  outline: 3px solid rgba(184, 149, 80, 0.4);
+  outline-offset: 3px;
+}
+
+.booking-bar__submit:active {
+  transform: translateY(1px);
+}
+
+.booking-bar__error {
+  margin: 15px 0 0;
+  padding: 11px 14px;
+  color: #8c302b;
+  background: #fff0ee;
+  border-left: 3px solid #b84c43;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.booking-bar__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 25px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #eeebe2;
+}
+
+.booking-bar__footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #72776e;
+  font-size: 11px;
+}
+
+.booking-bar__footer svg {
+  color: #a98949;
+}
+
+/* ==========================================
+   RESPONSIVE BOOKING BAR
+========================================== */
+
+@media (min-width: 1500px) {
+  .booking-bar {
+    padding: 34px 40px 22px;
+  }
+
+  .booking-bar__fields {
+    gap: 15px;
+  }
+
+  .booking-field {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .booking-bar {
+    padding: 27px 25px 19px;
+  }
+
+  .booking-bar__fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .booking-bar__submit {
+    min-height: 74px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-booking {
+    padding-bottom: 30px;
+  }
+
+  .booking-bar {
+    padding: 23px 17px 18px;
+    border-radius: 0 0 9px 9px;
+  }
+
+  .booking-bar__heading {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 21px;
+  }
+
+  .booking-bar__icon {
+    width: 43px;
+    height: 43px;
+  }
+
+  .booking-bar__heading h2 {
+    font-size: 24px;
+  }
+
+  .booking-bar__heading p {
+    font-size: 12px;
+  }
+
+  .booking-bar__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .booking-field {
+    padding: 13px 11px 11px;
+  }
+
+  .booking-field label {
+    gap: 6px;
+    font-size: 10px;
+  }
+
+  .booking-field input,
+  .booking-field select {
+    font-size: 12px;
+  }
+
+  .booking-bar__submit {
+    grid-column: 1 / -1;
+    min-height: 54px;
+    margin-top: 3px;
+  }
+
+  .booking-bar__footer {
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 14px;
+  }
+
+  .booking-bar__footer span {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .booking-bar {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .booking-bar__fields {
+    gap: 8px;
+  }
+
+  .booking-field {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .booking-field label {
+    font-size: 9px;
+  }
+
+  .booking-field input,
+  .booking-field select {
+    font-size: 11px;
+  }
+}

@@ -50,47 +50,51 @@
   font: inherit;
 }
 
+
 /* =========================================================
-   HERO
+   HERO — REDUCED IMAGE CROPPING
 ========================================================= */
 
 .contact-hero {
   position: relative;
-  min-height: 78vh;
   min-height: 680px;
+  min-height: 78svh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  background:
-    linear-gradient(
-      115deg,
-      rgba(18, 29, 23, 0.92),
-      rgba(27, 43, 34, 0.66),
-      rgba(18, 29, 23, 0.36)
-    ),
-    url("../assets/contact-hero.jpg") center center / cover no-repeat;
+  isolation: isolate;
+  background: #18291f;
 }
 
+/* Image layer: image is controlled only here */
 .contact-hero__background {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      circle at 70% 35%,
-      rgba(199, 155, 85, 0.13),
-      transparent 28%
-    );
+  z-index: 0;
+
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+
   pointer-events: none;
 }
 
+/* Dark overlay keeps text readable */
 .contact-hero__overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
     linear-gradient(
-      to bottom,
-      rgba(10, 17, 13, 0.12),
-      rgba(10, 17, 13, 0.2)
+      90deg,
+      rgba(18, 29, 23, 0.82) 0%,
+      rgba(18, 29, 23, 0.52) 48%,
+      rgba(18, 29, 23, 0.16) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(10, 17, 13, 0.3),
+      transparent 45%
     );
   pointer-events: none;
 }
@@ -99,8 +103,8 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 110px;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 
 .contact-hero__inner {
@@ -111,7 +115,7 @@
   margin: 22px 0 24px;
   color: #fff;
   font-size: clamp(3.5rem, 7vw, 6.8rem);
-  line-height: 0.94;
+  line-height: 0.98;
   letter-spacing: -0.055em;
   font-weight: 500;
 }
@@ -119,15 +123,15 @@
 .contact-hero h1 span {
   display: block;
   color: var(--contact-gold-light);
-  font-style: italic;
   font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
   font-weight: 400;
 }
 
 .contact-hero p {
   max-width: 680px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.84);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 1.08rem;
   line-height: 1.85;
 }
@@ -145,14 +149,11 @@
   left: 50%;
   bottom: 34px;
   transform: translateX(-50%);
-
   width: min(1200px, calc(100% - 48px));
-
   display: flex;
   align-items: center;
   gap: 10px;
-
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -160,8 +161,74 @@
 }
 
 .contact-hero__location svg {
+  flex-shrink: 0;
   color: var(--contact-gold-light);
 }
+
+/* Tablet */
+@media (max-width: 900px) {
+  .contact-hero {
+    min-height: 650px;
+  }
+
+  .contact-hero__content {
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+
+  .contact-hero h1 {
+    font-size: clamp(3.2rem, 8vw, 5.5rem);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .contact-hero {
+    min-height: 620px;
+    align-items: center;
+  }
+
+  .contact-hero__background {
+    background-position: 60% center;
+  }
+
+  .contact-hero__overlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(18, 29, 23, 0.76),
+        rgba(18, 29, 23, 0.4)
+      ),
+      linear-gradient(
+        0deg,
+        rgba(10, 17, 13, 0.38),
+        transparent 70%
+      );
+  }
+
+  .contact-hero__content {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .contact-hero h1 {
+    font-size: clamp(3rem, 12vw, 4.3rem);
+    line-height: 1;
+  }
+
+  .contact-hero p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .contact-hero__location {
+    bottom: 22px;
+    width: calc(100% - 36px);
+    font-size: 0.65rem;
+    letter-spacing: 0.09em;
+  }
+}
+
 
 /* =========================================================
    EYEBROWS

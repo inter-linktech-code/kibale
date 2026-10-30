@@ -289,7 +289,7 @@ function Footer() {
             </div>
 
             <a
-              href="mailto:info@kibaletouristsinn.com"
+              href="mailto:Kibaleinn@gmailcom"
               className="site-footer__email"
             >
               <Mail size={14} />

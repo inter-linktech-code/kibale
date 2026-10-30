@@ -426,7 +426,7 @@ const [rooms, setRooms] = useState(
                   <span>0786 197 552</span>
                 </a>
 
-                <a href="mailto:info@kibaletouristsinn.com">
+                <a href="mailto:Kibaleinn@gmailcom">
                   <Mail size={17} />
                   <span>Email our team</span>
                 </a>

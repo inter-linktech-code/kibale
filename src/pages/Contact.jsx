@@ -205,7 +205,7 @@ function Contact() {
             </motion.a>
 
             <motion.a
-              href="mailto:info@kibaletouristsinn.com"
+              href="mailto:Kibaleinn@gmailcom"
               className="contact-card"
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
